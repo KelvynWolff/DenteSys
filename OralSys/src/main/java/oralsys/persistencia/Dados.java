@@ -1,11 +1,14 @@
 package br.unigran.persistencia;
 
-//import br.unigran.model.User;
+import java.util.Arrays;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.swing.JOptionPane;
+import oralsys.entidades.Login;
+import static oralsys.entidades.Login_.senha;
 
 public class Dados {
     EntityManagerFactory emf=
@@ -29,17 +32,19 @@ public class Dados {
         em.remove(o);
         etx.commit();
     }
-    /*public List listar(){
-        return em.createNativeQuery("select * from User p",User.class)
-                .getResultList();
-    }
-    public List listarOO(){
-        return em.createNativeQuery("select p from User p")
-                .getResultList();
-    }
     
-    public void Login() {
-        Object singleResult = em.createQuery("select O from Usuario O " + "where O.login=? and O.senha =:senha").setParameter("login", u.getLogin()).setParameter("senha",u.getSenha()).getSingleResult();
+    /*
+    public List listarTask(String condicao) {
+       String queryString = "SELECT * FROM Task";
+       if (condicao != null && !condicao.isEmpty()) {
+           queryString += " WHERE " + condicao;
+       }
+       return em.createNativeQuery(queryString, Task.class)
+               .getResultList();
+   }
+    public List listarOO(){
+        return em.createNativeQuery("select p from Users p")
+                .getResultList();
     }*/
     
 }
