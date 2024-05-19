@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 @Entity
-public class Funcionarios implements Serializable {
+public class Funcionario implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

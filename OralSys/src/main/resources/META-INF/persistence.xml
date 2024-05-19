@@ -3,11 +3,26 @@
   <persistence-unit name="oralsys_OralSys_jar_1.0-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>oralsys.entidades.Login</class>
+    <class>oralsys.entidades.Agendamento</class>
+    <class>oralsys.entidades.Arquivos</class>
+    <class>oralsys.entidades.Cidade</class>
+    <class>oralsys.entidades.Consulta</class>
+    <class>oralsys.entidades.Contato</class>
+    <class>oralsys.entidades.Endereco</class>
+    <class>oralsys.entidades.Estado</class>
+    <class>oralsys.entidades.FormaPagamento</class>
+    <class>oralsys.entidades.Funcao</class>
+    <class>oralsys.entidades.Material</class>
+    <class>oralsys.entidades.Paciente</class>
+    <class>oralsys.entidades.Prontuario</class>
+    <class>oralsys.entidades.Prontuarios</class>
+    <class>oralsys.entidades.TipoContato</class>
+    <class>oralsys.entidades.Funcionario</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/postgres"/>
-      <property name="javax.persistence.jdbc.user" value="postgres"/>
-      <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-      <property name="javax.persistence.jdbc.password" value="123"/>
+      <property name="javax.persistence.jdbc.url" value=""/>
+      <property name="javax.persistence.jdbc.user" value=""/>
+      <property name="javax.persistence.jdbc.driver" value=""/>
+      <property name="javax.persistence.jdbc.password" value=""/>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
     </properties>
   </persistence-unit>

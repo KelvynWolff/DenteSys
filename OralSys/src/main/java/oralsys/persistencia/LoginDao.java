@@ -1,10 +1,10 @@
-package br.unigran.persistencia;
+package oralsys.persistencia;
 
 import java.util.Arrays;
 import java.util.List;
 import oralsys.entidades.Login;
 
-public class LoginDAO extends Dados {
+public class LoginDao extends Dao {
     public List listarLogin(String condicao) {
         String queryString = "SELECT * FROM Login";
         if (condicao != null && !condicao.isEmpty()) {
