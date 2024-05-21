@@ -27,4 +27,6 @@ public class Consulta implements Serializable {
     private Funcionario dentista;
     @Column(name = "anexos", length = 15)
     private Arquivos anexos;
+    @Column(name = "status", length = 15)
+    private String status;
 }
