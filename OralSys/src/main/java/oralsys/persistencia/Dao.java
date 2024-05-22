@@ -1,54 +1,34 @@
 package oralsys.persistencia;
-
+import java.util.Arrays;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.swing.JOptionPane;
+import oralsys.entidades.Login;
+import static oralsys.entidades.Login_.senha;
 
 public class Dao {
-   private static Dao entidade;
-   private final EntityManagerFactory  emf;
-   final  EntityManager  em;
+    EntityManagerFactory emf=
+            Persistence.
+                    createEntityManagerFactory("oralsys_OralSys_jar_1.0-SNAPSHOTPU");
+    EntityManager em =emf.createEntityManager();
+    EntityTransaction etx = em.getTransaction();
 
-    public Dao() {
-        emf= Persistence.createEntityManagerFactory("oralsys_OralSys_jar_1.0-SNAPSHOTPU");
-        em= emf.createEntityManager();
-
-    }
-    
-    public static Dao getInstace(){
-        if(entidade==null)
-            entidade= new Dao();
-        return entidade;
-    }
-    public EntityManager getEm(){
-        return em;
-    }
-    
-    public Object salvar(Object o){
-        em.getTransaction().begin();
+    public void salvar(Object o){
+        etx.begin();
         em.persist(o);
-        em.getTransaction().commit();
-        return o;   
+        etx.commit();
     }
-    public  Object atualiza(Object o){
-        em.getTransaction().begin();
-       Object retorno = em.merge(o);
-        em.getTransaction().commit();
-        return retorno;
+    public void atualiza(Object o){
+        etx.begin();
+        em.merge(o);
+        etx.commit();
     }
-     public  void remove(Object o){
-        em.getTransaction().begin();
+     public void remove(Object o){
+        etx.begin();
         em.remove(o);
-        em.getTransaction().commit();
+        etx.commit();
     }
-    public  List listar(Class c, String where){
-        return em.createNativeQuery("select o from "+c.getSimpleName()+" o where 1=1 "+where)
-                .getResultList();
-    }
-
-    void remove(Integer id, Class clazz) {
-        em.getTransaction().begin();
-      //  em.remove();
-        em.getTransaction().commit();    }
 }
