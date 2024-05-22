@@ -1,54 +1,59 @@
 package oralsys.persistencia;
 
+import java.util.LinkedList;
+import java.util.List;
 import oralsys.entidades.Consulta;
 
 public class AgendamentoDao extends Dao {
     public String marcarConsulta(Consulta consulta) {
-        String status = "";
+        List status = new LinkedList();
         if (consulta.getFormaPagamentos().isEmpty()) {
-            status = "Forma de pagamento invalida!";
-        } else if (consulta.getPaciente().equals("") || consulta.getPaciente() == null) {
-            status = "Paciente invalido!";
-        } else if (consulta.getDentista().equals("") || consulta.getDentista() == null) {
-            status = "Dentista invalido!";
+            status.add("Forma de pagamento invalida!");
+        } 
+        if (consulta.getPaciente().equals("") || consulta.getPaciente() == null) {
+            status.add("Paciente invalido!");
+        }
+        if (consulta.getDentista().equals("") || consulta.getDentista() == null) {
+            status.add("Dentista invalido!");
         }
         if (status.equals("")) {
             this.salvar(consulta);
-            status = "Sucesso!";
         }
-        return status;
+        return status.toString();
     }
     public String cancelarConsulta(Consulta consulta) {
-        String status = "";
+        List status = new LinkedList();
         if (consulta.getFormaPagamentos().isEmpty()) {
-            status = "Forma de pagamento invalida!";
-        } else if (consulta.getPaciente().equals("") || consulta.getPaciente() == null) {
-            status = "Paciente invalido!";
-        } else if (consulta.getDentista().equals("") || consulta.getDentista() == null) {
-            status = "Dentista invalido!";
+            status.add("Forma de pagamento invalida!");
+        }
+        if (consulta.getPaciente().equals("") || consulta.getPaciente() == null) {
+            status.add("Paciente invalido!");
+        }
+        if (consulta.getDentista().equals("") || consulta.getDentista() == null) {
+            status.add("Dentista invalido!");
         }
         if (status.equals("")) {
             consulta.setStatus("CANCELADO");
             this.atualiza(consulta);
-            status = "Sucesso!";
         }
-        return status;
+        return status.toString();
     }
     
     public String confirmarConsulta(Consulta consulta) {
-        String status = "";
+        List status = new LinkedList();
         if (consulta.getFormaPagamentos().isEmpty()) {
-            status = "Forma de pagamento invalida!";
-        } else if (consulta.getPaciente().equals("") || consulta.getPaciente() == null) {
-            status = "Paciente invalido!";
-        } else if (consulta.getDentista().equals("") || consulta.getDentista() == null) {
-            status = "Dentista invalido!";
+            status.add("Forma de pagamento invalida!");
+        }
+        if (consulta.getPaciente().equals("") || consulta.getPaciente() == null) {
+            status.add("Paciente invalido!");
+        }
+        if (consulta.getDentista().equals("") || consulta.getDentista() == null) {
+            status.add("Dentista invalido!");
         }
         if (status.equals("")) {
             consulta.setStatus("CONFIRMADO");
             this.atualiza(consulta);
-            status = "Sucesso!";
         }
-        return status;
+        return status.toString();
     }
 }
