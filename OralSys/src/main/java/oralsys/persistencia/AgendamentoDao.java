@@ -2,9 +2,18 @@ package oralsys.persistencia;
 
 import java.util.LinkedList;
 import java.util.List;
+import oralsys.entidades.Agendamento;
 import oralsys.entidades.Consulta;
 
 public class AgendamentoDao extends Dao {
+    public List listarAgendamento (String condicao) {
+        String queryString = "SELECT * FROM Agendamento";
+        if (condicao != null && !condicao.isEmpty()) {
+            queryString += " WHERE " + condicao;
+        }
+        return em.createNativeQuery(queryString, Agendamento.class)
+                 .getResultList();
+    }
     public String marcarConsulta(Consulta consulta) {
         List status = new LinkedList();
         if (consulta.getFormaPagamentos().isEmpty()) {

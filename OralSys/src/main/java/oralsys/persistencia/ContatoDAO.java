@@ -1,42 +1,16 @@
 package oralsys.persistencia;
 
+import java.util.List;
+import oralsys.entidades.Consulta;
 import oralsys.entidades.Contato;
 
-public class ContatoDAO extends Dao {
-    
-    public String inserirContato(Contato contato) {
-        String status = "";
-        if (contato.getInformacao().isEmpty()) {
-            status = "Informação inválida!";
-        } else if (contato.getPaciente() == null) {
-            status = "Paciente inválido!";
-        } else if (contato.getTipo() == null) {
-            status = "Tipo de contato inválido!";
+public class ContatoDao extends Dao {
+    public List listarContato (String condicao) {   
+        String queryString = "SELECT * FROM Contato";
+        if (condicao != null && !condicao.isEmpty()) {
+            queryString += " WHERE " + condicao;
         }
-        if (status.equals("")) {
-            this.salvar(contato);
-            status = "Sucesso!";
-        }
-        return status;
-    }
-    
-    public String alterarContato(Contato contato) {
-        String status = "";
-        if (contato.getInformacao().isEmpty()) {
-            status = "Informação inválida!";
-        } else if (contato.getPaciente() == null) {
-            status = "Paciente inválido!";
-        } else if (contato.getTipo() == null) {
-            status = "Tipo de contato inválido!";
-        }
-        if (status.equals("")) {
-            this.atualiza(contato);
-            status = "Sucesso!";
-        }
-        return status;
-    }
-    
-    public void removerContato(Contato contato) {
-        this.remove(contato);
+        return em.createNativeQuery(queryString, Contato.class)
+                 .getResultList();
     }
 }
