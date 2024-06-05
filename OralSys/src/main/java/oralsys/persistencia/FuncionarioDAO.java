@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-public class FuncionarioDAO extends Dao {
+public class FuncionarioDao extends Dao {
 
     private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("oralsysPU");
 

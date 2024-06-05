@@ -7,7 +7,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import java.util.List;
 
-public class PacienteDAO {
+public class PacienteDao {
 
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("oralsysPU");
 
