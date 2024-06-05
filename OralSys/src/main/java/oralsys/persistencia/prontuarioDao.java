@@ -2,34 +2,24 @@ package oralsys.persistencia;
 
 import java.util.List;
 import oralsys.entidades.Consulta;
-import oralsys.entidades.Login;
-import oralsys.entidades.Prontuarios;
+import oralsys.entidades.Prontuario;
 
-public class prontuarioDao extends Dao {
-    public String cadastrarProntuario(Prontuarios prontuarios) {
-        String status = "";
-        if (prontuarios.getConsulta() == null || prontuarios.getConsulta().equals("")) {
-            status = "Paciente invalido!";
-        }
-        if (prontuarios.getProntuario().equals("") || prontuarios.getConsulta() == null) {
-            status = "Prontuario invalido!";
-        }
-        if (status.equals("")) {
-            this.salvar(prontuarios);
-            status = "Sucesso!";
-        }
-        return status;
-    }
+public class ProntuarioDao extends Dao {
     
-    public List buscarProntuario(Consulta consulta) {
-        String queryString = "SELECT * FROM Prontuarios WHERE consulta='" + consulta.getId() + "'";
-        return em.createNativeQuery(queryString, Login.class)
+    public List<Prontuario> buscarProntuario(Consulta consulta) {
+        String queryString = "SELECT * FROM Prontuario WHERE consulta='" + consulta.getId() + "'";
+        return em.createNativeQuery(queryString, Prontuario.class)
                  .getResultList();
     }
     
-    public List listarProntuario() {
-        String queryString = "SELECT * FROM Prontuarios";
-        return em.createNativeQuery(queryString, Login.class)
+    public List<Prontuario> listarProntuario(String condicao) {
+        String queryString = "SELECT * FROM Prontuario";
+        if (condicao != null && !condicao.isEmpty()) {
+            queryString += " WHERE " + condicao;
+        }
+        return em.createNativeQuery(queryString, Prontuario.class)
                  .getResultList();
     }
+
+
 }

@@ -12,6 +12,10 @@ import lombok.Data;
 @Entity
 @Data
 public class Funcao implements Serializable {
+
+    public static boolean isEmpty() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     @Column(name = "logins")
     private List<Login> logins;
     @Column(name = "nome", length = 50)
