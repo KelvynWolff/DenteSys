@@ -10,17 +10,21 @@ import oralsys.persistencia.ContatoDao;
 import org.json.JSONObject;
 
 public class ContatoController extends ContatoDao {
-    public String inserirContato(Contato contato) {
+    public String inserirContato(JSONObject contato) {
         String status = "";
-        if (contato.getInformacao().isEmpty()) {
+        if (contato.get("informacao").equals("")) {
             status = "Informação inválida!";
-        } else if (contato.getPaciente() == null) {
+        } else if (contato.get("paciente") == null) {
             status = "Paciente inválido!";
-        } else if (contato.getTipo() == null) {
+        } else if (contato.get("tipo") == null) {
             status = "Tipo de contato inválido!";
         }
         if (status.equals("")) {
-            this.salvar(contato);
+            Contato contatoClass = new Contato();
+            contatoClass.setInformacao((String) contato.get("informacao"));
+            contatoClass.setPaciente((Paciente) contato.get("paciente"));
+            contatoClass.setTipo((TipoContato) contato.get("tipo"));
+            this.salvar(contatoClass);
             status = "Sucesso!";
         }
         return status;
