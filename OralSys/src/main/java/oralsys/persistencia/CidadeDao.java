@@ -2,7 +2,7 @@ package oralsys.persistencia;
 
 import java.util.List;
 import oralsys.entidades.Cidade;
-import oralsys.entidades.Consulta;
+import oralsys.entidades.Cidade;
 import oralsys.entidades.Contato;
 
 public class CidadeDao extends Dao {
@@ -13,6 +13,11 @@ public class CidadeDao extends Dao {
         }
         return em.createNativeQuery(queryString, Cidade.class)
                  .getResultList();
+    }
+    
+    public Cidade buscarPorId(Long id) {
+        List<Cidade> cidades = listarCidade("id = " + id);
+        return cidades.isEmpty() ? null : cidades.get(0);
     }
 }
 

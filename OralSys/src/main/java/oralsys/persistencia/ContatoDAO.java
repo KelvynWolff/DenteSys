@@ -13,4 +13,9 @@ public class ContatoDao extends Dao {
         return em.createNativeQuery(queryString, Contato.class)
                  .getResultList();
     }
+    
+    public Contato buscarPorId(Long id) {
+        List<Contato> contatos = listarContato("id = " + id);
+        return contatos.isEmpty() ? null : contatos.get(0);
+    }
 }

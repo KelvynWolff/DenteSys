@@ -12,4 +12,9 @@ public class PacienteDao extends Dao {
         return em.createNativeQuery(queryString, Paciente.class)
                  .getResultList();
     }
+   
+   public Paciente buscarPorId(Long id) {
+        List<Paciente> pacientes = listarPaciente("id = " + id);
+        return pacientes.isEmpty() ? null : pacientes.get(0);
+    }
 }

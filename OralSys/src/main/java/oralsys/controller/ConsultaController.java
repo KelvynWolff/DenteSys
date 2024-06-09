@@ -1,74 +1,126 @@
 package oralsys.controller;
 
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import oralsys.entidades.Consulta;
 import oralsys.entidades.Consulta;
 import oralsys.entidades.FormaPagamento;
 import oralsys.entidades.Funcionario;
 import oralsys.entidades.Paciente;
 import oralsys.entidades.Prontuario;
 import oralsys.persistencia.ConsultaDao;
+import oralsys.persistencia.ConverterEntidades;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class ConsultaController extends ConsultaDao {
+public class ConsultaController implements Controller {
+    private ConsultaDao consultaDao;
+    private ConverterEntidades converterEntidades;
     
-        public String marcarConsulta(JSONObject consultaJSON) {
-        List status = new LinkedList();
-        if (consultaJSON.get("dentista").equals("") || consultaJSON.get("dentista") == null) {
+    public ConsultaController(ConsultaDao consultaDao, ConverterEntidades converterEntidades) {
+        this.consultaDao = consultaDao;
+        this.converterEntidades = converterEntidades;
+    }
+
+    @Override
+    public Consulta converte(JSONObject json) {
+        if (json == null) {
+            throw new IllegalArgumentException("O objeto JSON não pode ser nulo");
+        }
+
+        Consulta consulta = new Consulta();
+
+        if (json.has("dentistaId")) {
+            Long dentistaId = json.getLong("dentistaId");
+            Funcionario dentista = converterEntidades.converterFuncionarioPorId(dentistaId);
+            consulta.setDentista(dentista);
+        }
+
+        if (json.has("formaPagamentosIds")) {
+            JSONArray formaPagamentosIds = json.getJSONArray("formaPagamentosIds");
+            List<FormaPagamento> formaPagamentos = converterEntidades.converterFormaPagamentosPorIds(formaPagamentosIds);
+            consulta.setFormaPagamentos(formaPagamentos);
+        }
+
+        consulta.setObservacao(json.optString("observacao"));
+
+        if (json.has("pacienteId")) {
+            Long pacienteId = json.getLong("pacienteId");
+            Paciente paciente = converterEntidades.converterPacientePorId(pacienteId);
+            consulta.setPaciente(paciente);
+        }
+
+        if (json.has("prontuariosIds")) {
+            JSONArray prontuariosIds = json.getJSONArray("prontuariosIds");
+            List<Prontuario> prontuarios = converterEntidades.converterProntuariosPorIds(prontuariosIds);
+            consulta.setProntuarios(prontuarios);
+        }
+
+        consulta.setStatus(json.optString("status"));
+
+        return consulta;
+    }
+
+    public String marcarConsulta(JSONObject consultaJSON) {
+        List<String> status = new LinkedList<>();
+        
+        if (consultaJSON.optString("dentistaId").isEmpty()) {
             status.add("Dentista invalido!");
         }
-        if (consultaJSON.get("formaPagamento").equals("")) {
+        if (consultaJSON.optString("formaPagamentosIds").isEmpty()) {
             status.add("Forma de pagamento invalida!");
         }
-        if (consultaJSON.get("paciente").equals("") || consultaJSON.get("paciente") == null) {
+        if (consultaJSON.optString("pacienteId").isEmpty()) {
             status.add("Paciente invalido!");
         }
-        if (consultaJSON.get("prontuario").equals("") || consultaJSON.get("prontuario") == null) {
+        if (consultaJSON.optString("prontuariosIds").isEmpty()) {
             status.add("Prontuario invalido!");
         }
-        if (consultaJSON.get("status").equals("") || consultaJSON.get("status") == null) {
+        if (consultaJSON.optString("status").isEmpty()) {
             status.add("Status invalido!");
         }
-        if (status.equals("")) {
-            Consulta consulta = new Consulta();
-            consulta.setDentista((Funcionario) consultaJSON.get("dentista"));
-            consulta.setFormaPagamentos((List<FormaPagamento>) consultaJSON.get("formaPagamento"));
-            consulta.setObservacao((String) consultaJSON.get("observacao"));
-            consulta.setPaciente((Paciente) consultaJSON.get("paciente"));
-            consulta.setProntuarios((List<Prontuario>) consultaJSON.get("prontuario"));
-            consulta.setStatus((String) consultaJSON.get("status"));
-            status.add("Sucesso!");
-            this.atualiza(consulta);
+
+        if (status.isEmpty()) {
+            try {
+                Consulta consulta = converte(consultaJSON);
+                consultaDao.salvar(consulta);
+                status.add("Sucesso!");
+            } catch (IllegalArgumentException e) {
+                status.add(e.getMessage());
+            }
         }
-            
-        return status.toString();
+        return String.join(", ", status);
     }
+
     public String cancelarConsulta(String id) {
         String status = "Sucesso!";
         if (id.isEmpty()) {
             status = "ID Invalido!";
-        }
-        String condicao = "id=' " + id + "'";
-        if (status.equals("Sucesso!")) {
-            List<Consulta> consulta = this.listarConsulta(condicao);
-            consulta.get(0).setStatus("cancelado");
-            this.atualiza(consulta);
+        } else {
+            Long consultaId = Long.parseLong(id);
+            Consulta consulta = consultaDao.buscarPorId(consultaId);
+            if (consulta != null) {
+                consulta.setStatus("cancelado");
+                consultaDao.atualiza(consulta);
+            } else {
+                status = "Consulta não encontrada!";
+            }
         }
         return status;
     }
-    
+
     public String confirmarConsulta(String id) {
         String status = "Sucesso!";
         if (id.isEmpty()) {
             status = "ID Invalido!";
-        }
-        String condicao = "id=' " + id + "'";
-        if (status.equals("Sucesso!")) {
-            List<Consulta> consulta = this.listarConsulta(condicao);
-            consulta.get(0).setStatus("confirmado");
-            this.salvar(consulta);
+        } else {
+            Long consultaId = Long.parseLong(id);
+            Consulta consulta = consultaDao.buscarPorId(consultaId);
+            if (consulta != null) {
+                consulta.setStatus("confirmado");
+                consultaDao.atualiza(consulta);
+            } else {
+                status = "Consulta não encontrada!";
+            }
         }
         return status;
     }

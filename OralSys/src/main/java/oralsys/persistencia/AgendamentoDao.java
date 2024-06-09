@@ -65,4 +65,9 @@ public class AgendamentoDao extends Dao {
         }
         return status.toString();
     }
+    
+    public Agendamento buscarPorId(Long id) {
+        List<Agendamento> agendamentos = listarAgendamento("id = " + id);
+        return agendamentos.isEmpty() ? null : agendamentos.get(0);
+    }
 }

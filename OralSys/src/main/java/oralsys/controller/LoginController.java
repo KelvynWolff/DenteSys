@@ -1,22 +1,21 @@
 package oralsys.controller;
 
 import java.util.Arrays;
-import java.util.List;
 import oralsys.entidades.Login;
 import oralsys.persistencia.LoginDao;
 
-public class LoginController extends LoginDao {
-   public boolean validaAcesso(String login_pesquisa, char[] senha) {
-        String condicao = "login = " + login_pesquisa;
-        List<Login> logins = this.listarLogin(condicao);
-        Boolean valido = false;
-        if (!logins.isEmpty()) {
-            for (Login login : logins) {
-                if (Arrays.equals(login.getSenha(), senha)) {
-                    valido = true;
-                }
-            }
+public class LoginController {
+    private LoginDao loginDao;
+
+    public LoginController(LoginDao loginDao) {
+        this.loginDao = loginDao;
+    }
+
+    public boolean validaAcesso(String loginPesquisa, char[] senha) {
+        Login login = loginDao.buscarPorLogin(loginPesquisa);
+        if (login != null && Arrays.equals(login.getSenha(), senha)) {
+            return true;
         }
-        return valido;
-    } 
+        return false;
+    }
 }

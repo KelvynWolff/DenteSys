@@ -23,11 +23,10 @@ public class Funcionario implements Serializable {
 
     @Column(length = 200)
     private String nome;
-
     
-    @Transient 
-    private List<String> agendamentos = new ArrayList<>();
+    @Column(name = "agendamentos", length = 20)
+    private List<Agendamento> agendamentos;
 
-    @Transient 
-    private List<String> consultas = new ArrayList<>();
+    @Column(name = "consultas", length = 20)
+    private List<Consulta> consultas;
 }

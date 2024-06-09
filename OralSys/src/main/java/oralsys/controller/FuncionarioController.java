@@ -2,42 +2,85 @@ package oralsys.controller;
 
 import java.util.LinkedList;
 import java.util.List;
-import oralsys.entidades.FormaPagamento;
 import oralsys.entidades.Funcionario;
+import oralsys.entidades.Agendamento;
+import oralsys.entidades.Consulta;
 import oralsys.entidades.Login;
-import oralsys.entidades.Paciente;
 import oralsys.persistencia.FuncionarioDao;
+import oralsys.persistencia.ConverterEntidades;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class FuncionarioController extends FuncionarioDao {
-    public String cadastrarPaciente(JSONObject funcionarioJSON) {
-        List status = new LinkedList();
-        if (funcionarioJSON.get("agendamentos").equals("")) {
-            status.add("Agendamento inválido!");
-        }
-        if (funcionarioJSON.get("consultas").equals("")) {
-            status.add("Consulta inválida!");
-        }
-        if (funcionarioJSON.get("login") == null) {
-            status.add("Login inválido!");
-        }
-        if (funcionarioJSON.get("nome").equals("")) {
-            status.add("Nome inválido!");
-        }
-        if (funcionarioJSON.get("registro").equals("")) {
-            status.add("Registro inválido!");
-        }
-        if (status.equals("")) {
-            Funcionario funcionario = new Funcionario();
-            funcionario.setAgendamentos((List<String>) funcionarioJSON.get("agendamentos"));
-            funcionario.setConsultas((List<String>) funcionarioJSON.get("consultas"));
-            funcionario.setLogin((Login) funcionarioJSON.get("login"));
-            funcionario.setNome((String) funcionarioJSON.get("nome"));
-            funcionario.setRegistro((String) funcionarioJSON.get("registro"));
-            this.salvar(funcionario);
-            status.add("Sucesso!");
-        }
-        return status.toString();
+public class FuncionarioController implements Controller {
+    private FuncionarioDao funcionarioDao;
+    private ConverterEntidades converterEntidades;
+
+    public FuncionarioController(FuncionarioDao funcionarioDao, ConverterEntidades converterEntidades) {
+        this.funcionarioDao = funcionarioDao;
+        this.converterEntidades = converterEntidades;
     }
 
+    @Override
+    public Funcionario converte(JSONObject json) {
+        if (json == null) {
+            throw new IllegalArgumentException("O objeto JSON não pode ser nulo");
+        }
+
+        Funcionario funcionario = new Funcionario();
+
+        if (json.has("agendamentosIds")) {
+            JSONArray agendamentosIds = json.getJSONArray("agendamentosIds");
+            List<Agendamento> agendamentos = converterEntidades.converterAgendamentosPorIds(agendamentosIds);
+            funcionario.setAgendamentos(agendamentos);
+        }
+
+        if (json.has("consultasIds")) {
+            JSONArray consultasIds = json.getJSONArray("consultasIds");
+            List<Consulta> consultas = converterEntidades.converterConsultasPorIds(consultasIds);
+            funcionario.setConsultas(consultas);
+        }
+
+        if (json.has("loginId")) {
+            Long loginId = json.getLong("loginId");
+            Login login = converterEntidades.converterLoginPorId(loginId);
+            funcionario.setLogin(login);
+        }
+
+        funcionario.setNome(json.optString("nome"));
+        funcionario.setRegistro(json.optString("registro"));
+
+        return funcionario;
+    }
+
+    public String cadastrarFuncionario(JSONObject funcionarioJSON) {
+        List<String> status = new LinkedList<>();
+
+        if (!funcionarioJSON.has("agendamentosIds") || funcionarioJSON.optJSONArray("agendamentosIds").length() == 0) {
+            status.add("Agendamento inválido!");
+        }
+        if (!funcionarioJSON.has("consultasIds") || funcionarioJSON.optJSONArray("consultasIds").length() == 0) {
+            status.add("Consulta inválida!");
+        }
+        if (!funcionarioJSON.has("loginId") || funcionarioJSON.optString("loginId").isEmpty()) {
+            status.add("Login inválido!");
+        }
+        if (funcionarioJSON.optString("nome").isEmpty()) {
+            status.add("Nome inválido!");
+        }
+        if (funcionarioJSON.optString("registro").isEmpty()) {
+            status.add("Registro inválido!");
+        }
+
+        if (status.isEmpty()) {
+            try {
+                Funcionario funcionario = converte(funcionarioJSON);
+                funcionarioDao.salvar(funcionario);
+                status.add("Sucesso!");
+            } catch (IllegalArgumentException e) {
+                status.add(e.getMessage());
+            }
+        }
+
+        return String.join(", ", status);
+    }
 }

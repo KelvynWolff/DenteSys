@@ -12,4 +12,9 @@ public class TipoPagamentoDao extends Dao {
         return em.createNativeQuery(queryString, TipoPagamento.class)
                  .getResultList();
     }
+    
+    public TipoPagamento buscarPorId(Long id) {
+        List<TipoPagamento> tipoPagamentos = listarTipoPagamento("id = " + id);
+        return tipoPagamentos.isEmpty() ? null : tipoPagamentos.get(0);
+    }
 }

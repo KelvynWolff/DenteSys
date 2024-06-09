@@ -1,60 +1,104 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package oralsys.controller;
 
 import java.util.LinkedList;
 import java.util.List;
-import oralsys.entidades.TipoPagamento;
-import oralsys.entidades.Paciente;
-import oralsys.persistencia.TipoPagamentoDao;
 import org.json.JSONObject;
+import oralsys.entidades.TipoPagamento;
+import oralsys.persistencia.ConverterEntidades;
+import oralsys.persistencia.TipoPagamentoDao;
 
-public class TipoPagamentoController extends TipoPagamentoDao {
-   public String inserirTipoPagamento(JSONObject tipoPagamento) {
-        String status = "";
-        if (tipoPagamento.get("tipo") == null) {
-            status = "Tipo de Pagamento inválido!";
-        }
-        if (status.equals("")) {
-            TipoPagamento tipoPagamentoClass = new TipoPagamento();
-            tipoPagamentoClass.setTipoPagamento((String) tipoPagamento.get("tipoPagamento"));
-            this.salvar(tipoPagamentoClass);
-            status = "Sucesso!";
-        }
-        return status;
+public class TipoPagamentoController implements Controller {
+    private TipoPagamentoDao tipoPagamentoDao;
+    private ConverterEntidades converterEntidades;
+
+    public TipoPagamentoController(TipoPagamentoDao tipoPagamentoDao, ConverterEntidades converterEntidades) {
+        this.tipoPagamentoDao = tipoPagamentoDao;
+        this.converterEntidades = converterEntidades;
     }
-    
-    public String alterarTipoPagamento(JSONObject tipoPagamentoJSON) {
-        List status = new LinkedList();
-        if (tipoPagamentoJSON.get("id").equals("")) {
-            status.add("ID Invalido!");
+
+    @Override
+    public TipoPagamento converte(JSONObject json) {
+        if (json == null) {
+            throw new IllegalArgumentException("O objeto JSON não pode ser nulo");
         }
-       
-        String condicao = "id=' " + tipoPagamentoJSON.get("id") + "'";
-        if (status.equals("")) {
-            List<TipoPagamento> tipoPagamento = this.listarTipoPagamento(condicao);
-            if (!tipoPagamentoJSON.get("tipoPagamento").equals("")) {
-                tipoPagamento.get(0).setTipoPagamento((String) tipoPagamentoJSON.get("tipoPagamento"));
+
+        TipoPagamento tipoPagamento = new TipoPagamento();
+
+        if (json.has("id")) {
+            Long id = json.getLong("id");
+            TipoPagamento tipoPagamentoExistente = converterEntidades.converterTipoPagamentoPorId(id);
+            if (tipoPagamentoExistente != null) {
+                tipoPagamento = tipoPagamentoExistente;
             }
-            this.atualiza(tipoPagamento);
-            status.add("Sucesso!");
         }
-        return status.toString();
+
+        tipoPagamento.setTipoPagamento(json.optString("tipoPagamento"));
+
+        return tipoPagamento;
     }
-    
+
+    public String inserirTipoPagamento(JSONObject tipoPagamentoJSON) {
+        List<String> status = new LinkedList<>();
+
+        if (!tipoPagamentoJSON.has("tipoPagamento") || tipoPagamentoJSON.optString("tipoPagamento").isEmpty()) {
+            status.add("Tipo de Pagamento inválido!");
+        }
+
+        if (status.isEmpty()) {
+            try {
+                TipoPagamento tipoPagamento = converte(tipoPagamentoJSON);
+                tipoPagamentoDao.salvar(tipoPagamento);
+                status.add("Sucesso!");
+            } catch (IllegalArgumentException e) {
+                status.add(e.getMessage());
+            }
+        }
+
+        return String.join(", ", status);
+    }
+
+    public String alterarTipoPagamento(JSONObject tipoPagamentoJSON) {
+        List<String> status = new LinkedList<>();
+
+        if (!tipoPagamentoJSON.has("id") || tipoPagamentoJSON.optString("id").isEmpty()) {
+            status.add("ID Inválido!");
+        }
+
+        if (status.isEmpty()) {
+            try {
+                TipoPagamento tipoPagamento = converte(tipoPagamentoJSON);
+                tipoPagamentoDao.atualiza(tipoPagamento);
+                status.add("Sucesso!");
+            } catch (IllegalArgumentException e) {
+                status.add(e.getMessage());
+            }
+        }
+
+        return String.join(", ", status);
+    }
+
     public String removerTipoPagamento(String id) {
-        List status = new LinkedList();
-        if (id.equals("")) {
-            status.add("ID Invalido!");
+        List<String> status = new LinkedList<>();
+
+        if (id == null || id.isEmpty()) {
+            status.add("ID Inválido!");
         }
-        if (status.equals("")) {
-            String condicao = "id=' " + id + "'";
-            List<TipoPagamento> tipoPagamentos = this.listarTipoPagamento(condicao);
-            this.remove(tipoPagamentos.get(0));
-            status.add("Sucesso!");
+
+        if (status.isEmpty()) {
+            try {
+                Long tipoPagamentoId = Long.parseLong(id);
+                TipoPagamento tipoPagamento = converterEntidades.converterTipoPagamentoPorId(tipoPagamentoId);
+                if (tipoPagamento != null) {
+                    tipoPagamentoDao.remove(tipoPagamento);
+                    status.add("Sucesso!");
+                } else {
+                    status.add("Tipo de Pagamento não encontrado!");
+                }
+            } catch (NumberFormatException e) {
+                status.add("ID inválido!");
+            }
         }
-        return status.toString();
-    } 
+
+        return String.join(", ", status);
+    }
 }

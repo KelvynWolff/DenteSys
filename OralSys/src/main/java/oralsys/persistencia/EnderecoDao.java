@@ -12,4 +12,9 @@ public class EnderecoDao extends Dao {
         return em.createNativeQuery(queryString, Endereco.class)
                  .getResultList();
     }
+    
+    public Endereco buscarPorId(Long id) {
+        List<Endereco> enderecos = listarEndereco("id = " + id);
+        return enderecos.isEmpty() ? null : enderecos.get(0);
+    }
 }

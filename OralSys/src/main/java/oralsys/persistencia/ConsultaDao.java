@@ -14,4 +14,9 @@ public class ConsultaDao extends Dao {
         return em.createNativeQuery(queryString, Consulta.class)
                  .getResultList();
     }
+    
+    public Consulta buscarPorId(Long id) {
+        List<Consulta> consultas = listarConsulta("id = " + id);
+        return consultas.isEmpty() ? null : consultas.get(0);
+    }
 }

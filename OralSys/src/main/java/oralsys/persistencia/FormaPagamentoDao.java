@@ -13,4 +13,8 @@ public class FormaPagamentoDao extends Dao {
         return em.createNativeQuery(queryString, FormaPagamento.class)
                  .getResultList();
     }
+    public FormaPagamento buscarPorId(Long id) {
+        List<FormaPagamento> formaPagamentos = listarFormaPagamento("id = " + id);
+        return formaPagamentos.isEmpty() ? null : formaPagamentos.get(0);
+    }
 }

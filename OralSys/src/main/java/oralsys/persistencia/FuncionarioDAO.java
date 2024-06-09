@@ -12,4 +12,9 @@ public class FuncionarioDao extends Dao {
         return em.createNativeQuery(queryString, Funcionario.class)
                  .getResultList();
     }
+    
+    public Funcionario buscarPorId(Long id) {
+        List<Funcionario> funcionarios = listarFuncionario("id = " + id);
+        return funcionarios.isEmpty() ? null : funcionarios.get(0);
+    }
 }
