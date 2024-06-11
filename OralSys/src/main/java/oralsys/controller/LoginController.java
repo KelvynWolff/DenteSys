@@ -7,8 +7,8 @@ import oralsys.persistencia.LoginDao;
 public class LoginController {
     private LoginDao loginDao;
 
-    public LoginController(LoginDao loginDao) {
-        this.loginDao = loginDao;
+    public LoginController() {
+        this.loginDao = new LoginDao();
     }
 
     public boolean validaAcesso(String loginPesquisa, char[] senha) {

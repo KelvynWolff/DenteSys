@@ -11,9 +11,9 @@ public class TipoPagamentoController implements Controller {
     private TipoPagamentoDao tipoPagamentoDao;
     private ConverterEntidades converterEntidades;
 
-    public TipoPagamentoController(TipoPagamentoDao tipoPagamentoDao, ConverterEntidades converterEntidades) {
-        this.tipoPagamentoDao = tipoPagamentoDao;
-        this.converterEntidades = converterEntidades;
+    public TipoPagamentoController() {
+        this.tipoPagamentoDao = new TipoPagamentoDao();
+        this.converterEntidades = new ConverterEntidades();
     }
 
     @Override

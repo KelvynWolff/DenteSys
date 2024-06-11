@@ -19,9 +19,9 @@ public class PacienteController implements Controller {
     private PacienteDao pacienteDao;
     private ConverterEntidades converterEntidades;
     
-    public PacienteController(PacienteDao pacienteDao, ConverterEntidades converterEntidades) {
-        this.pacienteDao = pacienteDao;
-        this.converterEntidades = converterEntidades;
+    public PacienteController() {
+        this.pacienteDao = new PacienteDao();
+        this.converterEntidades = new ConverterEntidades();
     }
     
     public String inserirPaciente(JSONObject pacienteJSON) {

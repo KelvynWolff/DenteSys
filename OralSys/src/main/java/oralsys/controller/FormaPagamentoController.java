@@ -13,9 +13,9 @@
         private FormaPagamentoDao formaPagamentoDao;
         private ConverterEntidades converterEntidades;
 
-        public FormaPagamentoController(FormaPagamentoDao formaPagamentoDao, ConverterEntidades converterEntidades) {
-            this.formaPagamentoDao = formaPagamentoDao;
-            this.converterEntidades = converterEntidades;
+        public FormaPagamentoController() {
+            this.formaPagamentoDao = new FormaPagamentoDao();
+            this.converterEntidades = new ConverterEntidades();
         }
 
         @Override

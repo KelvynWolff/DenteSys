@@ -13,12 +13,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class ConsultaController implements Controller {
-    private ConsultaDao consultaDao;
     private ConverterEntidades converterEntidades;
     
-    public ConsultaController(ConsultaDao consultaDao, ConverterEntidades converterEntidades) {
-        this.consultaDao = consultaDao;
-        this.converterEntidades = converterEntidades;
+    public ConsultaController() {
+        this.converterEntidades = new ConverterEntidades();
     }
 
     @Override
@@ -82,6 +80,7 @@ public class ConsultaController implements Controller {
         if (status.isEmpty()) {
             try {
                 Consulta consulta = converte(consultaJSON);
+                ConsultaDao consultaDao = new ConsultaDao();
                 consultaDao.salvar(consulta);
                 status.add("Sucesso!");
             } catch (IllegalArgumentException e) {
@@ -97,6 +96,7 @@ public class ConsultaController implements Controller {
             status = "ID Invalido!";
         } else {
             Long consultaId = Long.parseLong(id);
+            ConsultaDao consultaDao = new ConsultaDao();
             Consulta consulta = consultaDao.buscarPorId(consultaId);
             if (consulta != null) {
                 consulta.setStatus("cancelado");
@@ -114,6 +114,7 @@ public class ConsultaController implements Controller {
             status = "ID Invalido!";
         } else {
             Long consultaId = Long.parseLong(id);
+            ConsultaDao consultaDao = new ConsultaDao();
             Consulta consulta = consultaDao.buscarPorId(consultaId);
             if (consulta != null) {
                 consulta.setStatus("confirmado");

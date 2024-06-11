@@ -15,9 +15,9 @@ public class FuncionarioController implements Controller {
     private FuncionarioDao funcionarioDao;
     private ConverterEntidades converterEntidades;
 
-    public FuncionarioController(FuncionarioDao funcionarioDao, ConverterEntidades converterEntidades) {
-        this.funcionarioDao = funcionarioDao;
-        this.converterEntidades = converterEntidades;
+    public FuncionarioController() {
+        this.funcionarioDao = new FuncionarioDao();
+        this.converterEntidades = new ConverterEntidades();
     }
 
     @Override

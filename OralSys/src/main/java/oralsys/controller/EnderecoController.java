@@ -14,9 +14,9 @@ public class EnderecoController implements Controller {
     private EnderecoDao enderecoDao;
     private ConverterEntidades converterEntidades;
 
-    public EnderecoController(EnderecoDao enderecoDao, ConverterEntidades converterEntidades) {
-        this.enderecoDao = enderecoDao;
-        this.converterEntidades = converterEntidades;
+    public EnderecoController() {
+        this.enderecoDao = new EnderecoDao();
+        this.converterEntidades = new ConverterEntidades();
     }
 
     @Override

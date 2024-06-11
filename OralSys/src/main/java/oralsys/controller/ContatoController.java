@@ -13,9 +13,9 @@ public class ContatoController implements Controller {
     private ContatoDao contatoDao;
     private ConverterEntidades converterEntidades;
 
-    public ContatoController(ContatoDao contatoDao, ConverterEntidades converterEntidades) {
-        this.contatoDao = contatoDao;
-        this.converterEntidades = converterEntidades;
+    public ContatoController() {
+        this.contatoDao = new ContatoDao();
+        this.converterEntidades = new ConverterEntidades();
     }
 
     public String inserirContato(JSONObject contatoJSON) {
