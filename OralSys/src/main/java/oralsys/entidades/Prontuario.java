@@ -1,11 +1,7 @@
 package oralsys.entidades;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import lombok.Data;
 
 @Data
@@ -13,10 +9,17 @@ import lombok.Data;
 public class Prontuario implements Serializable {
     
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    @OneToMany
-    private List<Paciente> pacientes = new ArrayList<>();
-    
-    private List<String> prontuarios = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "paciente_id")
+    private Paciente paciente;
+
+    @ManyToOne
+    @JoinColumn(name = "consulta_id")
+    private Consulta consulta;
+
+    @Column(nullable = false)
+    private String descricao;
 }

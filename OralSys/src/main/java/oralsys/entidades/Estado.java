@@ -1,15 +1,19 @@
 package oralsys.entidades;
 
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import lombok.Data;
 
-@Entity
 @Data
+@Entity
 public class Estado implements Serializable {
     @Id
-    @Column(name = "estado", length = 2)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(length = 2, nullable = false)
     private String uf;
+
+    @Column(length = 50, nullable = false)
+    private String nome;
 }

@@ -2,27 +2,28 @@ package oralsys.entidades;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import lombok.Data;
 
-@Entity
 @Data
+@Entity
 public class Agendamento implements Serializable {
-    @Column(name = "recepcionista", length = 15)
-    private Funcionario recepcionista;
-    @Column(name = "paciente", length = 15)
-    private Paciente paciente;
-    @Column(name = "dentista", length = 15)
-    private Funcionario dentista;
-    @Column(name = "data")
-    private Date data;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "hora")
-    private Date hora;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataHora;
+
+    @ManyToOne
+    @JoinColumn(name = "funcionario_id")
+    private Funcionario funcionario;
+
+    @ManyToOne
+    @JoinColumn(name = "paciente_id")
+    private Paciente paciente;
+
+    @ManyToOne
+    @JoinColumn(name = "funcao_id")
+    private Funcao funcao;
 }

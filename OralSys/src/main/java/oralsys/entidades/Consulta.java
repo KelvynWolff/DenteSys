@@ -2,31 +2,41 @@ package oralsys.entidades;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import lombok.Data;
 
 @Data
 @Entity
 public class Consulta implements Serializable {
-    @Column(name = "observacao")
-    private String observacao;
-    @Column(name = "formaPagamentos")
-    private List<FormaPagamento> formaPagamentos;
-    @Column(name = "prontuarios")
-    private List<Prontuario> prontuarios;
-    @Column(name = "paciente", length = 15)
-    private Paciente paciente;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "dentista", length = 15)
+
+    @ManyToOne
+    @JoinColumn(name = "funcionario_id")
+    private Funcionario funcionario;
+
+    @Column(length = 255)
+    private String observacao;
+
+    @ManyToOne
+    @JoinColumn(name = "paciente_id")
+    private Paciente paciente;
+
+    @ManyToOne
+    @JoinColumn(name = "dentista_id")
     private Funcionario dentista;
-    @Column(name = "anexos", length = 15)
-    private Arquivos anexos;
-    @Column(name = "status", length = 15)
+
+    @ManyToOne
+    @JoinColumn(name = "arquivo_id")
+    private Arquivos arquivo;
+
+    @Column(length = 15)
     private String status;
+
+    @OneToMany(mappedBy = "consulta")
+    private List<FormaPagamento> formaPagamentos;
+
+    @OneToMany(mappedBy = "consulta")
+    private List<Prontuario> prontuarios;
 }

@@ -15,7 +15,7 @@ public class EstadoDao extends Dao {
     }
     
     public Estado buscarPorUf(String uf) {
-        List<Estado> estados = listarEstado("uf = " + uf);
+        List<Estado> estados = listarEstado("uf = '" + uf + "'");
         return estados.isEmpty() ? null : estados.get(0);
     }
 }

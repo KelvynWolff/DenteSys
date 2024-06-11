@@ -1,23 +1,28 @@
 package oralsys.entidades;
 
 import java.io.Serializable;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
 import lombok.Data;
 
-@Entity
 @Data
+@Entity
 public class FormaPagamento implements Serializable {
-    @Column(name = "consulta", length = 15)
-    private Consulta consulta;
-    @Column(name = "tipoPagamento", length = 15)
-    private TipoPagamento tipoPagamento;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "valor", length = 50)
+
+    @ManyToOne
+    @JoinColumn(name = "tipoPagamento_id")
+    private TipoPagamento tipoPagamento;
+
+    @ManyToOne
+    @JoinColumn(name = "consulta_id")
+    private Consulta consulta;
+
     private Double valor;
 }

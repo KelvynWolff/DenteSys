@@ -1,11 +1,9 @@
 package oralsys.entidades;
 
-import lombok.Data;
-
-import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.*;
+import lombok.Data;
 
 @Data
 @Entity
@@ -15,6 +13,13 @@ public class Funcionario implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "funcao_id")
+    private Funcao funcao;
+
+    @OneToMany(mappedBy = "funcionario")
+    private List<Consulta> consultas;
+
     @Column(nullable = false)
     private String registro;
 
@@ -23,10 +28,7 @@ public class Funcionario implements Serializable {
 
     @Column(length = 200)
     private String nome;
-    
-    @Column(name = "agendamentos", length = 20)
-    private List<Agendamento> agendamentos;
 
-    @Column(name = "consultas", length = 20)
-    private List<Consulta> consultas;
+    @OneToMany(mappedBy = "funcionario")
+    private List<Agendamento> agendamentos;
 }

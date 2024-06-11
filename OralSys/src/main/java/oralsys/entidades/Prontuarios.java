@@ -1,23 +1,24 @@
 package oralsys.entidades;
 
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import lombok.Data;
 
-@Entity
 @Data
+@Entity
 public class Prontuarios implements Serializable {
-    @Column(name = "prontuario", length = 15)
-    private Prontuario prontuario;
-    @Column(name = "consulta", length = 15)
-    private Consulta consulta;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "prontuario_id")
+    private Prontuario prontuario;
+
+    @ManyToOne
+    @JoinColumn(name = "consulta_id")
+    private Consulta consulta;
+
     @Column(name = "descricao", length = 150)
     private String descricao;
 }

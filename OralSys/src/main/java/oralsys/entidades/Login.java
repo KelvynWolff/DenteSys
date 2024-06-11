@@ -1,27 +1,36 @@
 package oralsys.entidades;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import lombok.Data;
-@Entity
+
 @Data
+@Entity
 public class Login implements Serializable {
-    @Column(name = "funcao", length = 15)
-    private Funcao funcao;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "materials")
+
+    @OneToOne
+    @JoinColumn(name = "funcionario_id")
+    private Funcionario funcionario;
+
+    @ManyToOne
+    @JoinColumn(name = "funcao_id")
+    private Funcao funcao;
+
+    @ManyToMany
+    @JoinTable(
+        name = "login_material", 
+        joinColumns = @JoinColumn(name = "login_id"), 
+        inverseJoinColumns = @JoinColumn(name = "material_id")
+    )
     private List<Material> materials;
+
     @Column(name = "senha", length = 50)
     private char[] senha;
+
     @Column(name = "login", length = 50)
     private String login;
-    @Column(name = "funcionario", length = 15)
-    private Funcionario funcionario;
 }

@@ -7,7 +7,6 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
 import oralsys.entidades.Login;
-import static oralsys.entidades.Login_.senha;
 
 public class Dao {
     EntityManagerFactory emf=

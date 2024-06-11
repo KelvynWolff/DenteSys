@@ -3,9 +3,10 @@ package oralsys.entidades;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import lombok.Data;
 
 @Data
@@ -13,12 +14,15 @@ import lombok.Data;
 public class Contato {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "paciente_id")
     private Paciente paciente;
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
+    @JoinColumn(name = "tipo_id")
     private TipoContato tipo;
 
     @Column(length = 255)

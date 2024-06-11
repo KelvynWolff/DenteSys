@@ -1,25 +1,33 @@
 package oralsys.entidades;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
 import lombok.Data;
 
-@Entity
 @Data
+@Entity
 public class Endereco implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "rua", length = 100)
-    private String rua;
-    @Column(name = "pacientes")
-    private List<Paciente> pacientes;
-    @Column(name = "cidade", length = 15)
+
+    @ManyToOne
+    @JoinColumn(name = "cidade_id")
     private Cidade cidade;
+
+    @Column(length = 100)
+    private String rua;
+
+    @OneToMany(mappedBy = "endereco")
+    private List<Paciente> pacientes;
+
 }

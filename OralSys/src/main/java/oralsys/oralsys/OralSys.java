@@ -1,8 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
-
 package oralsys.oralsys;
+
+import oralsys.view.CadastroCidade;
+
 
 /**
  *
@@ -11,6 +10,6 @@ package oralsys.oralsys;
 public class OralSys {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        new CadastroCidade().setVisible(true);
     }
 }

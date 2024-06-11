@@ -4,35 +4,15 @@ import oralsys.persistencia.CidadeDao;
 import java.util.LinkedList;
 import java.util.List;
 import oralsys.entidades.Cidade;
-import oralsys.entidades.Cidade;
-import oralsys.entidades.Endereco;
 import oralsys.entidades.Estado;
-import oralsys.entidades.FormaPagamento;
-import oralsys.entidades.Funcionario;
-import oralsys.entidades.Paciente;
-import oralsys.entidades.Prontuario;
-import oralsys.persistencia.ConverterEntidades;
 import oralsys.persistencia.EstadoDao;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class CidadeController implements Controller {
-    private CidadeDao cidadeDao;
-    private ConverterEntidades converterEntidades;
-    private EstadoDao estadoDao;
-    
-    public CidadeController(CidadeDao cidadeDao, ConverterEntidades converterEntidades, EstadoDao estadoDao) {
-        this.cidadeDao = cidadeDao;
-        this.converterEntidades = converterEntidades;
-        this.estadoDao = estadoDao;
-    }
     
      public String cadastrarCidade(JSONObject cidadeJSON) {
         List<String> status = new LinkedList<>();
 
-        if (cidadeJSON.optString("enderecosIds").isEmpty()) {
-            status.add("Endereco invalido!");
-        }
         if (cidadeJSON.optString("estado").isEmpty()) {
             status.add("Estado invalido!");
         }
@@ -42,6 +22,7 @@ public class CidadeController implements Controller {
         if (status.isEmpty()) {
             try {
                 Cidade cidade = converte(cidadeJSON);
+                CidadeDao cidadeDao = new CidadeDao();
                 cidadeDao.salvar(cidade);
                 status.add("Sucesso!");
             } catch (IllegalArgumentException e) {
@@ -58,6 +39,7 @@ public class CidadeController implements Controller {
         }
         String condicao = "id=' " + id + "'";
         if (status.equals("Sucesso!")) {
+            CidadeDao cidadeDao = new CidadeDao();
             List<Cidade> cidade = cidadeDao.listarCidade(condicao);
             cidadeDao.remove(cidade.get(0));
         }
@@ -75,6 +57,7 @@ public class CidadeController implements Controller {
 
         if (json.has("estado")) {
             String estadoNome = json.optString("estado");
+            EstadoDao estadoDao = new EstadoDao();
             Estado estado = estadoDao.buscarPorUf(estadoNome);
             if (estado != null) {
                 cidade.setEstado(estado);
@@ -83,13 +66,6 @@ public class CidadeController implements Controller {
             }
         }
 
-        if (json.has("enderecosIds")) {
-            JSONArray enderecosIds = json.getJSONArray("enderecosIds");
-            List<Endereco> enderecos = converterEntidades.converterEnderecosPorIds(enderecosIds);
-            cidade.setEnderecos(enderecos);
-        }
-
         return cidade;
-    }
-    
+    }   
 }

@@ -2,23 +2,19 @@ package oralsys.entidades;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import lombok.Data;
 
-@Entity
 @Data
+@Entity
 public class Funcao implements Serializable {
-    @Column(name = "logins")
-    private List<Login> logins;
-    @Column(name = "nome", length = 50)
-    private String nome;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "descricao", length = 50)
-    private String descricao;
+
+    @OneToMany(mappedBy = "funcao")
+    private List<Funcionario> funcionarios;
+
+    @Column(nullable = false)
+    private String nome;
 }
