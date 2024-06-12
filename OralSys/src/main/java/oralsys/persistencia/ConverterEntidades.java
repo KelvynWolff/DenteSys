@@ -21,7 +21,7 @@ public class ConverterEntidades {
     public List<Consulta> converterConsultasPorIds(JSONArray idsArray) {
         List<Consulta> consultas = new ArrayList<>();
         for (int i = 0; i < idsArray.length(); i++) {
-            Long id = idsArray.getLong(i);
+            int id = idsArray.getInt(i);
             ConsultaDao consultaDao = new ConsultaDao();
             Consulta consulta = consultaDao.buscarPorId(id);
             if (consulta != null) {
@@ -134,7 +134,7 @@ public class ConverterEntidades {
         return formaPagamentoDao.buscarPorId(id);
     }
     
-    public Consulta converterConsultaPorId(Long id) {
+    public Consulta converterConsultaPorId(int id) {
         ConsultaDao consultaDao = new ConsultaDao();
         return consultaDao.buscarPorId(id);
     }

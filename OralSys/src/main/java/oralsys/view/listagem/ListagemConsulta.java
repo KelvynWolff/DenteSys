@@ -7,7 +7,9 @@ package oralsys.view.listagem;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import oralsys.controller.CidadeController;
+import oralsys.controller.ConsultaController;
 import oralsys.view.CidadeCadastro;
+import oralsys.view.ConsultaCadastro;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -154,8 +156,8 @@ public class ListagemConsulta extends javax.swing.JFrame {
 
             int response = JOptionPane.showConfirmDialog(null, "Você tem certeza que deseja excluir?", "Confirmar Ação", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (response == JOptionPane.YES_OPTION) {
-                CidadeController cidadeController = new CidadeController();
-                cidadeController.excluirCidade((int) id);
+                ConsultaController consultaController = new ConsultaController();
+                consultaController.excluirConsulta((int) id);
                 montarTabela("");
             }
         }
@@ -175,12 +177,12 @@ public class ListagemConsulta extends javax.swing.JFrame {
             Object nome = model.getValueAt(selectedRow, 1);
             Object uf = model.getValueAt(selectedRow, 2);
 
-            ConsultaCadastro consultaCadastro = new ConsultaCadastro(this);
-            cadastroCidade.setCidade((String) nome);
-            cadastroCidade.setEstado((String) uf);
+            ConsultaCadastro consultaCadastrar = new ConsultaCadastro(this);
+            /*consultaCadastrar.setCidade((String) nome);
+            consultaCadastrar.setEstado((String) uf);
             cadastroCidade.setModo("alterar");
             cadastroCidade.setId((int) id);
-            cadastroCidade.setVisible(true);
+            cadastroCidade.setVisible(true);*/
         }
     }//GEN-LAST:event_btnEditarActionPerformed
     public void montarTabela(String condicao) {

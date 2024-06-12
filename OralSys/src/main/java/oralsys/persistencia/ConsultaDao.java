@@ -15,7 +15,7 @@ public class ConsultaDao extends Dao {
                  .getResultList();
     }
     
-    public Consulta buscarPorId(Long id) {
+    public Consulta buscarPorId(int id) {
         List<Consulta> consultas = listarConsulta("id = " + id);
         return consultas.isEmpty() ? null : consultas.get(0);
     }

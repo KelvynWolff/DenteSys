@@ -22,7 +22,7 @@ public class CidadeCadastro extends javax.swing.JFrame {
     String modo = "cadastro";
     int id = 0;
     /**
-     * Creates new form CadastroCidade
+     * Creates new for mCadastroCidade
      */
     public CidadeCadastro() {
         initComponents();

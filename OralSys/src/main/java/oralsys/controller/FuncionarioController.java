@@ -83,4 +83,22 @@ public class FuncionarioController implements Controller {
 
         return String.join(", ", status);
     }
+    
+    public JSONArray listarFuncionario(String condicao) {
+        FuncionarioDao funcionarioDao = new FuncionarioDao();
+        List<Funcionario> retorno = funcionarioDao.listarFuncionario(condicao);
+
+        JSONArray jsonArray = new JSONArray();
+
+        for (Funcionario funcionario : retorno) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", funcionario.getId());
+            jsonObject.put("nome", funcionario.getNome());
+            jsonObject.put("registro", funcionario.getRegistro());
+            jsonObject.put("funcao", funcionario.getFuncao().getNome());
+            jsonArray.put(jsonObject);
+        }
+
+        return jsonArray;
+    }
 }

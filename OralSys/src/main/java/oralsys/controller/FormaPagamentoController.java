@@ -27,7 +27,7 @@
             FormaPagamento formaPagamento = new FormaPagamento();
 
             if (json.has("consultaId")) {
-                Long consultaId = json.getLong("consultaId");
+                int consultaId = json.getInt("consultaId");
                 Consulta consulta = converterEntidades.converterConsultaPorId(consultaId);
                 formaPagamento.setConsulta(consulta);
             }

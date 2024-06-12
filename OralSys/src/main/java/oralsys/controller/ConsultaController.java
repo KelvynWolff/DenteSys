@@ -90,32 +90,29 @@ public class ConsultaController implements Controller {
         return String.join(", ", status);
     }
 
-    public String cancelarConsulta(String id) {
+    public String excluirConsulta(int id) {
         String status = "Sucesso!";
-        if (id.isEmpty()) {
+        if (id == 0) {
             status = "ID Invalido!";
         } else {
-            Long consultaId = Long.parseLong(id);
             ConsultaDao consultaDao = new ConsultaDao();
-            Consulta consulta = consultaDao.buscarPorId(consultaId);
+            Consulta consulta = consultaDao.buscarPorId(id);
             if (consulta != null) {
-                consulta.setStatus("cancelado");
-                consultaDao.atualiza(consulta);
+                consultaDao.remove(consulta);
             } else {
                 status = "Consulta não encontrada!";
             }
         }
         return status;
     }
-
-    public String confirmarConsulta(String id) {
+    
+    public String confirmarConsulta(int id) {
         String status = "Sucesso!";
-        if (id.isEmpty()) {
+        if (id == 0) {
             status = "ID Invalido!";
         } else {
-            Long consultaId = Long.parseLong(id);
             ConsultaDao consultaDao = new ConsultaDao();
-            Consulta consulta = consultaDao.buscarPorId(consultaId);
+            Consulta consulta = consultaDao.buscarPorId(id);
             if (consulta != null) {
                 consulta.setStatus("confirmado");
                 consultaDao.atualiza(consulta);
