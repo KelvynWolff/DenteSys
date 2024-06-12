@@ -10,6 +10,7 @@ import oralsys.controller.CidadeController;
 import oralsys.persistencia.CidadeDao;
 import oralsys.persistencia.ConverterEntidades;
 import oralsys.persistencia.EstadoDao;
+import oralsys.view.listagem.ListagemCidade;
 import org.json.JSONObject;
 
 /**
@@ -17,12 +18,39 @@ import org.json.JSONObject;
  * @author kelvy
  */
 public class CidadeCadastro extends javax.swing.JFrame {
+<<<<<<< HEAD
 
+=======
+    ListagemCidade listagemCidade;
+    String modo = "cadastro";
+    int id = 0;
+>>>>>>> 8db69720588449c612097bf580b7044bdd89454b
     /**
      * Creates new form CadastroCidade
      */
     public CidadeCadastro() {
         initComponents();
+    }
+    
+    public CidadeCadastro(ListagemCidade listagemCidade) {
+        this.listagemCidade = listagemCidade;
+        initComponents();
+    }
+    
+    public void setCidade(String cidade) {
+        tCidade.setText(cidade);
+    }
+    
+    public void setEstado(String estado) {
+        tEstado.setText(estado);
+    }
+    
+    public void setModo(String modo) {
+        this.modo = "alterar";
+    }
+    
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
@@ -144,9 +172,13 @@ public class CidadeCadastro extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         String retorno = salvar();
-        
+        String mensagem = "Cidade Cadastrada com Sucesso!";
+        if (this.modo.equals("alterar")) {
+            mensagem = "Cidade Alterada com Sucesso!";
+        }
         if (retorno.equals("Sucesso!")) {
-            JOptionPane.showMessageDialog(rootPane, "Cidade Cadastrada com Sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(rootPane, mensagem, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            listagemCidade.montarTabela("");
             dispose();
         } else {
             JOptionPane.showMessageDialog(rootPane, retorno, "Erro", JOptionPane.ERROR_MESSAGE);
@@ -210,8 +242,14 @@ public class CidadeCadastro extends javax.swing.JFrame {
         JSONObject json = new JSONObject();
         json.put("nome", cidade);
         json.put("estado", estado);
+        json.put("id", this.id);
         CidadeController cidadeController = new CidadeController();
-        String retorno = cidadeController.cadastrarCidade(json);
+        String retorno = "";
+        if (this.modo.equals("cadastro")) {
+            retorno = cidadeController.cadastrarCidade(json);
+        } else {
+            retorno = cidadeController.alterarCidade(json);
+        }
         return retorno;
     }
 }
