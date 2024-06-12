@@ -1,6 +1,7 @@
 package oralsys.oralsys;
 
-import oralsys.view.CadastroCidade;
+import oralsys.view.CidadeCadastro;
+import oralsys.view.listagem.ListagemCidade;
 
 
 /**
@@ -10,6 +11,7 @@ import oralsys.view.CadastroCidade;
 public class OralSys {
 
     public static void main(String[] args) {
-        new CadastroCidade().setVisible(true);
+        //new CadastroCidade().setVisible(true);
+        new ListagemCidade().setVisible(true);
     }
 }
