@@ -7,6 +7,7 @@ import oralsys.entidades.FormaPagamento;
 import oralsys.entidades.Funcionario;
 import oralsys.entidades.Paciente;
 import oralsys.entidades.Prontuario;
+import oralsys.entidades.TipoPagamento;
 import oralsys.persistencia.ConsultaDao;
 import oralsys.persistencia.ConverterEntidades;
 import org.json.JSONArray;
@@ -33,10 +34,10 @@ public class ConsultaController implements Controller {
             consulta.setDentista(dentista);
         }
 
-        if (json.has("formaPagamentosIds")) {
-            JSONArray formaPagamentosIds = json.getJSONArray("formaPagamentosIds");
-            List<FormaPagamento> formaPagamentos = converterEntidades.converterFormaPagamentosPorIds(formaPagamentosIds);
-            consulta.setFormaPagamentos(formaPagamentos);
+        if (json.has("tipoPagamentosIds")) {
+            int tipoPagamentosId = json.getInt("tipoPagamentosIds");
+            TipoPagamento tipoPagamentos = converterEntidades.converterTipoPagamentosPorIds(tipoPagamentosId);
+            consulta.setTipoPagamentos(tipoPagamentos);
         }
 
         consulta.setObservacao(json.optString("observacao"));
@@ -64,15 +65,12 @@ public class ConsultaController implements Controller {
         if (consultaJSON.optString("dentistaId").isEmpty()) {
             status.add("Dentista invalido!");
         }
-        if (consultaJSON.optString("formaPagamentosIds").isEmpty()) {
-            status.add("Forma de pagamento invalida!");
+        if (consultaJSON.optString("tipoPagamentosIds").isEmpty()) {
+            status.add("Tipo de pagamento invalido!");
         }
         if (consultaJSON.optString("pacienteId").isEmpty()) {
             status.add("Paciente invalido!");
-        }
-        if (consultaJSON.optString("prontuariosIds").isEmpty()) {
-            status.add("Prontuario invalido!");
-        }
+        }   
         if (consultaJSON.optString("status").isEmpty()) {
             status.add("Status invalido!");
         }

@@ -56,19 +56,6 @@ public class ConverterEntidades {
         }
         return prontuarios;
     }
-
-    public List<Agendamento> converterAgendamentosPorIds(JSONArray idsArray) {
-        List<Agendamento> agendamentos = new ArrayList<>();
-        for (int i = 0; i < idsArray.length(); i++) {
-            Long id = idsArray.getLong(i);
-            AgendamentoDao agendamentoDao = new AgendamentoDao();
-            Agendamento agendamento = agendamentoDao.buscarPorId(id);
-            if (agendamento != null) {
-                agendamentos.add(agendamento);
-            }
-        }
-        return agendamentos;
-    }
     
     public List<Contato> converterContatosPorIds(JSONArray idsArray) {
         List<Contato> contatos = new ArrayList<>();
@@ -113,6 +100,11 @@ public class ConverterEntidades {
         }
         return formaPagamentos;
     }
+    
+    public TipoPagamento converterTipoPagamentosPorIds(int id) {
+        TipoPagamentoDao tipoPagamentoDao = new TipoPagamentoDao();
+        return tipoPagamentoDao.buscarPorId(id);
+    }
 
     public Paciente converterPacientePorId(Long id) {
         PacienteDao pacienteDao = new PacienteDao();
@@ -139,7 +131,7 @@ public class ConverterEntidades {
         return consultaDao.buscarPorId(id);
     }
     
-    public TipoPagamento converterTipoPagamentoPorId(Long id) {
+    public TipoPagamento converterTipoPagamentoPorId(int id) {
         TipoPagamentoDao tipoPagamentoDao = new TipoPagamentoDao();
         return tipoPagamentoDao.buscarPorId(id);
     }

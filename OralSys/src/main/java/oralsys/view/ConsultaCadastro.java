@@ -1,28 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package oralsys.view;
 
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import oralsys.controller.ConsultaController;
+import oralsys.controller.TipoPagamentoController;
 import oralsys.controller.FuncionarioController;
+import oralsys.controller.PacienteController;
+import static oralsys.entidades.Funcionario_.registro;
 import oralsys.view.listagem.ListagemConsulta;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-/**
- *
- * @author kelvy
- */
-public class ConsultaCadastro extends javax.swing.JPanel {
+public class ConsultaCadastro extends javax.swing.JFrame {
     ListagemConsulta listagemConsulta;
     int id = 0;
     String modo = "";
-    /**
-     * Creates new form ConsultaCadastrar
-     */
+
     public ConsultaCadastro() {
         initComponents();
         inicio();
@@ -52,11 +45,11 @@ public class ConsultaCadastro extends javax.swing.JPanel {
         sStatus.setSelectedItem(status);
     }
     
-    public void setFormaPagamento(String formaPagamento) {
-        if (((DefaultComboBoxModel) sFormaPagamento.getModel()).getIndexOf(formaPagamento) == -1) {
-            sStatus.addItem(formaPagamento);
+    public void setTipoPagamento(String tipoPagamento) {
+        if (((DefaultComboBoxModel) sTipoPagamento.getModel()).getIndexOf(tipoPagamento) == -1) {
+            sStatus.addItem(tipoPagamento);
         }
-        sStatus.setSelectedItem(formaPagamento);
+        sStatus.setSelectedItem(tipoPagamento);
     }
     
     public void setObservacoes(String observacoes) {
@@ -90,7 +83,7 @@ public class ConsultaCadastro extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         textAreaObservacao = new javax.swing.JTextArea();
         tCPF = new javax.swing.JTextField();
-        sFormaPagamento = new javax.swing.JComboBox<>();
+        sTipoPagamento = new javax.swing.JComboBox<>();
         sStatus = new javax.swing.JComboBox<>();
         lNomeFuncionario = new javax.swing.JLabel();
         btnSalvar = new javax.swing.JButton();
@@ -98,6 +91,8 @@ public class ConsultaCadastro extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         sDentista = new javax.swing.JComboBox<>();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -135,12 +130,11 @@ public class ConsultaCadastro extends javax.swing.JPanel {
         tCPF.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jPanel1.add(tCPF, new org.netbeans.lib.awtextra.AbsoluteConstraints(272, 81, 300, -1));
 
-        sFormaPagamento.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        sFormaPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A vista", "Pix", "Credito" }));
-        jPanel1.add(sFormaPagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(272, 268, -1, -1));
+        sTipoPagamento.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jPanel1.add(sTipoPagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(272, 268, -1, -1));
 
         sStatus.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        sStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aguardando Confirmação", "Aguardando Horario", "Confirmado", "Cancelado", "Bloqueado" }));
+        sStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Agendado", "Cancelado", "Pendente" }));
         sStatus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sStatusActionPerformed(evt);
@@ -154,6 +148,11 @@ public class ConsultaCadastro extends javax.swing.JPanel {
 
         btnSalvar.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
         btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(238, 482, -1, -1));
 
         btnCancelar.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
@@ -182,8 +181,8 @@ public class ConsultaCadastro extends javax.swing.JPanel {
         });
         jPanel1.add(sDentista, new org.netbeans.lib.awtextra.AbsoluteConstraints(272, 129, 300, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -198,45 +197,102 @@ public class ConsultaCadastro extends javax.swing.JPanel {
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void sStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sStatusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sStatusActionPerformed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         /*JFileChooser fileChooser = new JFileChooser();
         int result = fileChooser.showOpenDialog(this);
-        
+
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
             JOptionPane.showMessageDialog(this, "Arquivo Selecionado: " + selectedFile.getAbsolutePath());
         }*/
     }//GEN-LAST:event_jButton1MouseClicked
 
-    private void sStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sStatusActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_sStatusActionPerformed
-
     private void sDentistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sDentistaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_sDentistaActionPerformed
 
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        String retorno = salvar();
+        String mensagem = "Consulta Cadastrada com Sucesso!";
+        if (this.modo.equals("alterar")) {
+            mensagem = "Consulta Alterada com Sucesso!";
+        }
+        if (retorno.equals("Sucesso!")) {
+            JOptionPane.showMessageDialog(rootPane, mensagem, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            listagemConsulta.montarTabela("");
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(rootPane, retorno, "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(ConsultaCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(ConsultaCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(ConsultaCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(ConsultaCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new ConsultaCadastro().setVisible(true);
+            }
+        });
+    }
+    
     public String salvar() {
         String cpfPaciente = tCPF.getText();
-        Object dentista = sDentista.getSelectedItem();
+        String dentistaItem = (String) sDentista.getSelectedItem();
+        int dentistaId = Integer.parseInt(dentistaItem.split(" - ")[0]);
         String status = sStatus.getSelectedItem().toString();
-        Object formaPagamento = sFormaPagamento.getSelectedItem();
-        String observacao = textAreaObservacao.getText();
-        System.out.println(cpfPaciente);
-        System.out.println(dentista);
-        System.out.println(status);
-        System.out.println(formaPagamento);
-        System.out.println(observacao);
+        String tipoPagamentoItem = (String) sTipoPagamento.getSelectedItem();
+        int tipoPagamentoId = Integer.parseInt(tipoPagamentoItem.split(" - ")[0]);
         
+        String observacao = textAreaObservacao.getText();
+        this.setId(dentistaId);
+        PacienteController pacienteController = new PacienteController();
+        String condicao_paciente = "cpf='"+ cpfPaciente + "'";
+        JSONArray retorno_paciente = pacienteController.listarPaciente(condicao_paciente);
+        JSONObject registro_paciente = retorno_paciente.getJSONObject(0);
+        int pacienteId = registro_paciente.getInt("id");
+
         JSONObject json = new JSONObject();
-        json.put("cpf", cpfPaciente);
-        json.put("dentista", dentista);
+        json.put("pacienteId", pacienteId);
+        json.put("dentistaId", dentistaId);
         json.put("status", status);
-        json.put("formaPagamento", formaPagamento);
+        json.put("tipoPagamentosIds", tipoPagamentoId);
         json.put("observacao", observacao);
         json.put("id", this.id);
+
         ConsultaController consultaController = new ConsultaController();
         String retorno = "";
         if (this.modo.equals("cadastro")) {
@@ -250,21 +306,22 @@ public class ConsultaCadastro extends javax.swing.JPanel {
     public void inicio() {
         FuncionarioController funcionarioController = new FuncionarioController();
         JSONArray array = funcionarioController.listarFuncionario("funcao_id='1'");
-        for (int i = 0; i < array.length(); i ++) {
+        for (int i = 0; i < array.length(); i++) {
             JSONObject registro = array.getJSONObject(i);
-            sDentista.addItem(registro.getString("nome"));
+            String item = registro.getInt("id") + " - " + registro.getString("nome");
+            sDentista.addItem(item);
         }
-        System.out.println(array);
+        
+        TipoPagamentoController tipoPagamentoController = new TipoPagamentoController();
+        JSONArray array2 = tipoPagamentoController.listarTipoPagamento("");
+        for (int i = 0; i < array2.length(); i++) {
+            JSONObject registro = array2.getJSONObject(i);
+            String item = registro.getInt("id") + " - " + registro.getString("nome");
+            sTipoPagamento.addItem(item);
+        }
+        
     }
-    
-    public static void main(String args[]) {
 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ConsultaCadastro().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
@@ -281,8 +338,8 @@ public class ConsultaCadastro extends javax.swing.JPanel {
     private javax.swing.JLabel lObservacao;
     private javax.swing.JLabel lStatus;
     private javax.swing.JComboBox<String> sDentista;
-    private javax.swing.JComboBox<String> sFormaPagamento;
     private javax.swing.JComboBox<String> sStatus;
+    private javax.swing.JComboBox<String> sTipoPagamento;
     private javax.swing.JTextField tCPF;
     private javax.swing.JTextArea textAreaObservacao;
     // End of variables declaration//GEN-END:variables

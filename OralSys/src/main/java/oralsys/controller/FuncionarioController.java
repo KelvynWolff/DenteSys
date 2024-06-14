@@ -28,12 +28,6 @@ public class FuncionarioController implements Controller {
 
         Funcionario funcionario = new Funcionario();
 
-        if (json.has("agendamentosIds")) {
-            JSONArray agendamentosIds = json.getJSONArray("agendamentosIds");
-            List<Agendamento> agendamentos = converterEntidades.converterAgendamentosPorIds(agendamentosIds);
-            funcionario.setAgendamentos(agendamentos);
-        }
-
         if (json.has("consultasIds")) {
             JSONArray consultasIds = json.getJSONArray("consultasIds");
             List<Consulta> consultas = converterEntidades.converterConsultasPorIds(consultasIds);

@@ -61,12 +61,6 @@ public class PacienteController implements Controller {
         }
         if (status.isEmpty()) {
             Paciente paciente = new Paciente();
-            
-            if (pacienteJSON.has("agendamentosIds")) {
-                JSONArray agendamentosIds = pacienteJSON.getJSONArray("agendamentosIds");
-                List<Agendamento> agendamentos = converterEntidades.converterAgendamentosPorIds(agendamentosIds);
-                paciente.setAgendamentos(agendamentos);
-            }
 
             if (pacienteJSON.has("consultasIds")) {
                 JSONArray consultasIds = pacienteJSON.getJSONArray("consultasIds");
@@ -131,11 +125,6 @@ public class PacienteController implements Controller {
             return String.join(", ", status);
         }
 
-        if (!pacienteJSON.optString("agendamentos").isEmpty()) {
-            JSONArray agendamentosIds = pacienteJSON.getJSONArray("agendamentos");
-            List<Agendamento> agendamentos = converterEntidades.converterAgendamentosPorIds(agendamentosIds);
-            paciente.setAgendamentos(agendamentos);
-        }
         if (!pacienteJSON.optString("consultas").isEmpty()) {
             JSONArray consultasIds = pacienteJSON.getJSONArray("consultas");
             List<Consulta> consultas = converterEntidades.converterConsultasPorIds(consultasIds);
@@ -201,6 +190,21 @@ public class PacienteController implements Controller {
         return String.join(", ", status);
     }
     
+    public JSONArray listarPaciente(String condicao) {
+        PacienteDao pacienteDao = new PacienteDao();
+        List<Paciente> retorno = pacienteDao.listarPaciente(condicao);
+
+        JSONArray jsonArray = new JSONArray();
+
+        for (Paciente paciente : retorno) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", paciente.getId());
+            jsonArray.put(jsonObject);
+        }
+
+        return jsonArray;
+    }
+    
    @Override
     public Paciente converte(JSONObject json) {
         if (json == null) {
@@ -239,12 +243,6 @@ public class PacienteController implements Controller {
             JSONArray prontuariosIds = json.getJSONArray("prontuariosIds");
             List<Prontuario> prontuarios = converterEntidades.converterProntuariosPorIds(prontuariosIds);
             paciente.setProntuarios(prontuarios);
-        }
-
-        if (json.has("agendamentosIds")) {
-            JSONArray agendamentosIds = json.getJSONArray("agendamentosIds");
-            List<Agendamento> agendamentos = converterEntidades.converterAgendamentosPorIds(agendamentosIds);
-            paciente.setAgendamentos(agendamentos);
         }
 
         if (!json.isNull("responsavelId")) {

@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import lombok.Data;
 
 @Data
@@ -15,4 +17,8 @@ public class TipoPagamento implements Serializable {
     private Long id;
 
     private String tipoPagamento;
+    
+    @ManyToOne
+    @JoinColumn(name = "consulta_id")
+    private Consulta consulta;
 }

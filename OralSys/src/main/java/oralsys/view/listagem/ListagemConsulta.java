@@ -165,6 +165,7 @@ public class ListagemConsulta extends javax.swing.JFrame {
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         ConsultaCadastro consultaCadastro = new ConsultaCadastro(this);
+        consultaCadastro.setModo("cadastro");
         consultaCadastro.setVisible(true);
     }//GEN-LAST:event_btnNovoActionPerformed
 

@@ -7,6 +7,7 @@
     import oralsys.entidades.TipoPagamento;
     import oralsys.persistencia.FormaPagamentoDao;
     import oralsys.persistencia.ConverterEntidades;
+import org.json.JSONArray;
     import org.json.JSONObject;
 
     public class FormaPagamentoController implements Controller {
@@ -33,7 +34,7 @@
             }
 
             if (json.has("tipoPagamentoId")) {
-                Long tipoPagamentoId = json.getLong("tipoPagamentoId");
+                int tipoPagamentoId = json.getInt("tipoPagamentoId");
                 TipoPagamento tipoPagamento = converterEntidades.converterTipoPagamentoPorId(tipoPagamentoId);
                 formaPagamento.setTipoPagamento(tipoPagamento);
             }
@@ -73,5 +74,20 @@
             }
 
             return String.join(", ", status);
+        }
+        
+        public JSONArray listarFormaPagamento(String condicao) {
+            FormaPagamentoDao formaPagamentoDao = new FormaPagamentoDao();
+            List<FormaPagamento> retorno = formaPagamentoDao.listarFormaPagamento(condicao);
+
+            JSONArray jsonArray = new JSONArray();
+
+            for (FormaPagamento formaPagamento : retorno) {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("id", formaPagamento.getId());
+                jsonArray.put(jsonObject);
+            }
+
+            return jsonArray;
         }
     }

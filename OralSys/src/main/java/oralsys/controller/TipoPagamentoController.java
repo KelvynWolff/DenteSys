@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import oralsys.entidades.TipoPagamento;
 import oralsys.persistencia.ConverterEntidades;
 import oralsys.persistencia.TipoPagamentoDao;
+import org.json.JSONArray;
 
 public class TipoPagamentoController implements Controller {
     private TipoPagamentoDao tipoPagamentoDao;
@@ -25,7 +26,7 @@ public class TipoPagamentoController implements Controller {
         TipoPagamento tipoPagamento = new TipoPagamento();
 
         if (json.has("id")) {
-            Long id = json.getLong("id");
+            int id = json.getInt("id");
             TipoPagamento tipoPagamentoExistente = converterEntidades.converterTipoPagamentoPorId(id);
             if (tipoPagamentoExistente != null) {
                 tipoPagamento = tipoPagamentoExistente;
@@ -86,7 +87,7 @@ public class TipoPagamentoController implements Controller {
 
         if (status.isEmpty()) {
             try {
-                Long tipoPagamentoId = Long.parseLong(id);
+                int tipoPagamentoId = Integer.parseInt(id);
                 TipoPagamento tipoPagamento = converterEntidades.converterTipoPagamentoPorId(tipoPagamentoId);
                 if (tipoPagamento != null) {
                     tipoPagamentoDao.remove(tipoPagamento);
@@ -101,4 +102,19 @@ public class TipoPagamentoController implements Controller {
 
         return String.join(", ", status);
     }
+    
+    public JSONArray listarTipoPagamento(String condicao) {
+            TipoPagamentoDao tipoPagamentoDao = new TipoPagamentoDao();
+            List<TipoPagamento> retorno = tipoPagamentoDao.listarTipoPagamento(condicao);
+
+            JSONArray jsonArray = new JSONArray();
+
+            for (TipoPagamento tipoPagamento : retorno) {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("id", tipoPagamento.getId());
+                jsonObject.put("nome", tipoPagamento.getTipoPagamento());
+                jsonArray.put(jsonObject);
+            }
+            return jsonArray;
+        }
 }

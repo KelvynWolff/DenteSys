@@ -13,7 +13,7 @@ public class TipoPagamentoDao extends Dao {
                  .getResultList();
     }
     
-    public TipoPagamento buscarPorId(Long id) {
+    public TipoPagamento buscarPorId(int id) {
         List<TipoPagamento> tipoPagamentos = listarTipoPagamento("id = " + id);
         return tipoPagamentos.isEmpty() ? null : tipoPagamentos.get(0);
     }
