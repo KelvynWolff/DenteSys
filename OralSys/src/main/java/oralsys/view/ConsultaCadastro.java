@@ -5,7 +5,6 @@ import javax.swing.JOptionPane;
 import oralsys.controller.ConsultaController;
 import oralsys.controller.TipoPagamentoController;
 import oralsys.controller.FuncionarioController;
-import oralsys.controller.LoginController;
 import oralsys.controller.PacienteController;
 import oralsys.view.listagem.ListagemConsulta;
 import org.json.JSONArray;
@@ -20,8 +19,7 @@ public class ConsultaCadastro extends javax.swing.JFrame {
         initComponents();
         inicio(0, 0);
         setLocationRelativeTo(null);
-        String nomeFuncionario = LoginController.getNomeFuncionarioLogado();
-            setNomeFuncionario(nomeFuncionario);
+        
     }
     
     public ConsultaCadastro(ListagemConsulta listagemConsulta) {
@@ -67,9 +65,7 @@ public class ConsultaCadastro extends javax.swing.JFrame {
         this.modo = modo;
     }
     
-    public void setNomeFuncionario(String nomeFuncionario) {
-        this.lNomeFuncionario.setText(nomeFuncionario);
-    }
+    
    
     
     @SuppressWarnings("unchecked")

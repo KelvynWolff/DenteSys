@@ -11,8 +11,8 @@ public class TipoPagamentoCadastro extends javax.swing.JFrame {
     private ListagemTipoPagamento listagemTipoPagamento;
 
     public TipoPagamentoCadastro() {
-        setLocationRelativeTo(null);
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     public void setTipoPagamento(String tipoPagamento) {
