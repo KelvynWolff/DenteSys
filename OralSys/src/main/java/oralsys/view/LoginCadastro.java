@@ -11,6 +11,7 @@ public class LoginCadastro extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
     }
+    
 
     
     @SuppressWarnings("unchecked")

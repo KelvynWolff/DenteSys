@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 import oralsys.controller.ConsultaController;
 import oralsys.controller.TipoPagamentoController;
 import oralsys.controller.FuncionarioController;
+import oralsys.controller.LoginController;
 import oralsys.controller.PacienteController;
 import oralsys.view.listagem.ListagemConsulta;
 import org.json.JSONArray;
@@ -19,6 +20,8 @@ public class ConsultaCadastro extends javax.swing.JFrame {
         initComponents();
         inicio(0, 0);
         setLocationRelativeTo(null);
+        String nomeFuncionario = LoginController.getNomeFuncionarioLogado();
+            setNomeFuncionario(nomeFuncionario);
     }
     
     public ConsultaCadastro(ListagemConsulta listagemConsulta) {
@@ -63,14 +66,17 @@ public class ConsultaCadastro extends javax.swing.JFrame {
     public void setModo(String modo) {
         this.modo = modo;
     }
-
+    
+    public void setNomeFuncionario(String nomeFuncionario) {
+        this.lNomeFuncionario.setText(nomeFuncionario);
+    }
+   
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        lFuncionario = new javax.swing.JLabel();
         lFormaPagamento = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         lArquivos = new javax.swing.JLabel();
@@ -81,7 +87,6 @@ public class ConsultaCadastro extends javax.swing.JFrame {
         tCPF = new javax.swing.JTextField();
         sTipoPagamento = new javax.swing.JComboBox<>();
         sStatus = new javax.swing.JComboBox<>();
-        lNomeFuncionario = new javax.swing.JLabel();
         btnSalvar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
@@ -93,10 +98,6 @@ public class ConsultaCadastro extends javax.swing.JFrame {
         setResizable(false);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        lFuncionario.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        lFuncionario.setText("Funcionario");
-        jPanel1.add(lFuncionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 565, -1, -1));
 
         lFormaPagamento.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lFormaPagamento.setText("Forma de Pagamento");
@@ -139,10 +140,6 @@ public class ConsultaCadastro extends javax.swing.JFrame {
             }
         });
         jPanel1.add(sStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(272, 222, 300, -1));
-
-        lNomeFuncionario.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        lNomeFuncionario.setText("Recebe o valor do nome do login");
-        jPanel1.add(lNomeFuncionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(99, 565, -1, -1));
 
         btnSalvar.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
         btnSalvar.setText("Salvar");
@@ -339,8 +336,6 @@ public class ConsultaCadastro extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lArquivos;
     private javax.swing.JLabel lFormaPagamento;
-    private javax.swing.JLabel lFuncionario;
-    private javax.swing.JLabel lNomeFuncionario;
     private javax.swing.JLabel lObservacao;
     private javax.swing.JLabel lStatus;
     private javax.swing.JComboBox<String> sDentista;
