@@ -5,6 +5,7 @@ import oralsys.view.listagem.ListagemConsulta;
 import oralsys.view.listagem.ListagemFuncionario;
 import oralsys.view.listagem.ListagemMaterial;
 import oralsys.view.listagem.ListagemPaciente;
+import oralsys.view.listagem.ListagemTipoPagamento;
 import oralsys.view.relatorios.RelatorioCidades;
 import oralsys.view.relatorios.RelatorioConsultas;
 import oralsys.view.relatorios.RelatorioFuncionarios;
@@ -32,6 +33,7 @@ public class Menu extends javax.swing.JFrame {
         btnMaterial = new javax.swing.JMenuItem();
         btnPaciente = new javax.swing.JMenuItem();
         btnFuncionario = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         relatorio = new javax.swing.JMenu();
         funcionario = new javax.swing.JMenuItem();
         paciente = new javax.swing.JMenuItem();
@@ -94,6 +96,14 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         cadastro.add(btnFuncionario);
+
+        jMenuItem1.setText("Tipo de Pagamento");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        cadastro.add(jMenuItem1);
 
         jMenuBar1.add(cadastro);
 
@@ -235,6 +245,10 @@ public class Menu extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_logoffActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        new ListagemTipoPagamento().setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -258,6 +272,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem funcionario;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JMenuItem jlogoff;
     private javax.swing.JMenu logoff;
