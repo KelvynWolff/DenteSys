@@ -1,12 +1,8 @@
 package oralsys.persistencia;
-import java.util.Arrays;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import javax.swing.JOptionPane;
-import oralsys.entidades.Login;
 
 public class Dao {
     EntityManagerFactory emf=

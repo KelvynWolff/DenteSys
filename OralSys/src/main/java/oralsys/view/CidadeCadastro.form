@@ -146,9 +146,6 @@
         <Component class="javax.swing.JTextField" name="tEstado">
         </Component>
         <Component class="javax.swing.JTextField" name="tCidade">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tCidadeActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnSalvar">
           <Properties>

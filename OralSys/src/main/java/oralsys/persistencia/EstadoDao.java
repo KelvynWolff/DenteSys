@@ -2,7 +2,6 @@ package oralsys.persistencia;
 
 import java.util.List;
 import oralsys.entidades.Estado;
-import oralsys.entidades.Paciente;
 
 public class EstadoDao extends Dao {
     public List listarEstado (String condicao) {   

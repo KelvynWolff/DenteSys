@@ -3,7 +3,6 @@ package oralsys.controller;
 import java.util.LinkedList;
 import java.util.List;
 import oralsys.entidades.Funcionario;
-import oralsys.entidades.Consulta;
 import oralsys.entidades.Login;
 import oralsys.persistencia.FuncionarioDao;
 import org.json.JSONArray;
@@ -58,7 +57,7 @@ public class FuncionarioController {
 
         
         if (funcionario.getFuncao() != null) {
-            //jsonObject.put("funcao", funcionario.getFuncao().getNome());
+           jsonObject.put("funcao", funcionario.getFuncao().getNome());
         } else {
             jsonObject.put("funcao", JSONObject.NULL);
         }
@@ -93,7 +92,6 @@ public class FuncionarioController {
             }
         } else if (loginObj instanceof String) {
             login.setLogin((String) loginObj);
-            // A senha não pode ser determinada se "login" é apenas uma string
             throw new IllegalArgumentException("Formato de login inválido, objeto JSON esperado");
         }
     } else {

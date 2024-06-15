@@ -1,7 +1,6 @@
 package oralsys.persistencia;
 
 import java.util.List;
-import oralsys.entidades.Consulta;
 import oralsys.entidades.Login;
 import oralsys.entidades.Prontuario;
 import oralsys.entidades.Prontuarios;
