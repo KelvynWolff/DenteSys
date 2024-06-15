@@ -2,7 +2,6 @@ package oralsys.view.relatorios;
 
 
 
-import java.awt.EventQueue;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.JasperViewer;
 

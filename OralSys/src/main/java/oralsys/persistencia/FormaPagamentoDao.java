@@ -2,7 +2,6 @@ package oralsys.persistencia;
 
 import java.util.List;
 import oralsys.entidades.FormaPagamento;
-import oralsys.entidades.FormaPagamento;
 
 public class FormaPagamentoDao extends Dao {
      public List listarFormaPagamento (String condicao) {   

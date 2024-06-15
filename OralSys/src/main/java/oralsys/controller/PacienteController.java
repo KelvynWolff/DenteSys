@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import oralsys.entidades.Consulta;
-import static oralsys.entidades.Consulta_.paciente;
 import oralsys.entidades.Contato;
 import oralsys.entidades.Endereco;
 import oralsys.entidades.Paciente;

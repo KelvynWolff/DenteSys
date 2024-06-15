@@ -3,23 +3,11 @@ package oralsys.view;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
-import javax.swing.JOptionPane;
-import oralsys.controller.CidadeController;
-import org.json.JSONObject;
-import oralsys.controller.CidadeController;
-import org.json.JSONObject;
 import org.json.JSONObject;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import oralsys.controller.PacienteController;
-import oralsys.entidades.Cidade;
 import oralsys.view.listagem.ListagemPaciente;
 
-/**
- *
- * @author kelvy
- */
 public class PacienteCadastro extends javax.swing.JFrame {
     
     private int id;
@@ -27,8 +15,8 @@ public class PacienteCadastro extends javax.swing.JFrame {
     private ListagemPaciente listagemPaciente;
 
     public PacienteCadastro() {
-        setLocationRelativeTo(null);
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     public PacienteCadastro(ListagemPaciente listagemPaciente) {
@@ -293,7 +281,7 @@ public class PacienteCadastro extends javax.swing.JFrame {
         if (retorno.contains("Sucesso!")) {
             JOptionPane.showMessageDialog(this, "Operação realizada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             if (listagemPaciente != null) {
-                //listagemPaciente.montarTabela("");
+                listagemPaciente.montarTabela("", false);
             }
             dispose();
         } else {

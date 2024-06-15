@@ -1,7 +1,6 @@
 package oralsys.persistencia;
 
 import java.util.List;
-import oralsys.entidades.Consulta;
 import oralsys.entidades.Contato;
 
 public class ContatoDao extends Dao {

@@ -1,6 +1,5 @@
 package oralsys.persistencia;
 
-import java.util.Arrays;
 import java.util.List;
 import oralsys.entidades.Login;
 
