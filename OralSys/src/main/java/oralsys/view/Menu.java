@@ -25,6 +25,7 @@ public class Menu extends javax.swing.JFrame {
      * Creates new form Menu
      */
     public Menu() {
+        setLocationRelativeTo(null);
         initComponents();
     }
 
@@ -155,6 +156,11 @@ public class Menu extends javax.swing.JFrame {
         jMenuBar1.add(relatorio);
 
         logoff.setText("Logoff");
+        logoff.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoffActionPerformed(evt);
+            }
+        });
 
         jlogoff.setText("Logoff");
         jlogoff.addActionListener(new java.awt.event.ActionListener() {
@@ -238,6 +244,10 @@ public class Menu extends javax.swing.JFrame {
         new LoginCadastro().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jlogoffActionPerformed
+
+    private void logoffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoffActionPerformed
+        dispose();
+    }//GEN-LAST:event_logoffActionPerformed
 
     /**
      * @param args the command line arguments

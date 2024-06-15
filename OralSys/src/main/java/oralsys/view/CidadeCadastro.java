@@ -26,6 +26,7 @@ public class CidadeCadastro extends javax.swing.JFrame {
      * Creates new for mCadastroCidade
      */
     public CidadeCadastro() {
+        setLocationRelativeTo(null);
         initComponents();
     }
     
@@ -68,7 +69,11 @@ public class CidadeCadastro extends javax.swing.JFrame {
         tCidade = new javax.swing.JTextField();
         btnSalvar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setAlwaysOnTop(true);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setMaximumSize(new java.awt.Dimension(401, 230));
+        setMinimumSize(new java.awt.Dimension(401, 230));
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel2.setText("Cadastro de Cidade");

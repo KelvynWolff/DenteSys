@@ -16,6 +16,7 @@ public class ConsultaCadastro extends javax.swing.JFrame {
     String modo = "";
 
     public ConsultaCadastro() {
+        setLocationRelativeTo(null);
         initComponents();
         inicio(0, 0);
     }
@@ -91,7 +92,7 @@ public class ConsultaCadastro extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         sDentista = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -156,6 +157,11 @@ public class ConsultaCadastro extends javax.swing.JFrame {
 
         btnCancelar.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(408, 482, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -232,6 +238,10 @@ public class ConsultaCadastro extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, retorno, "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments

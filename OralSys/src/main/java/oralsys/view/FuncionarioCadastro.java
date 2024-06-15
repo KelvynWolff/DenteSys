@@ -16,6 +16,7 @@ public class FuncionarioCadastro extends javax.swing.JFrame {
     int id = 0;
 
     public FuncionarioCadastro() {
+        setLocationRelativeTo(null);
         initComponents();
     }
 
@@ -84,7 +85,7 @@ public class FuncionarioCadastro extends javax.swing.JFrame {
         btnSalvar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel1.setText("Nome");

@@ -17,6 +17,7 @@ public class LoginCadastro extends javax.swing.JFrame {
      * Creates new form Login1
      */
     public LoginCadastro() {
+        setLocationRelativeTo(null);
         initComponents();
     }
 
@@ -40,7 +41,7 @@ public class LoginCadastro extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lLogin.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lLogin.setText("Login");
@@ -144,7 +145,7 @@ public class LoginCadastro extends javax.swing.JFrame {
     }//GEN-LAST:event_btnOkActionPerformed
 
     private void btnCaneclarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCaneclarActionPerformed
-        // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_btnCaneclarActionPerformed
 
     private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked

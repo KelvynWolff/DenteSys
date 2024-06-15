@@ -19,6 +19,7 @@ import org.json.JSONObject;
 public class ListagemConsulta extends javax.swing.JFrame {
 
     public ListagemConsulta() {
+        setLocationRelativeTo(null);
         initComponents();
         montarTabela("", false);
     }
@@ -43,6 +44,8 @@ public class ListagemConsulta extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
         btnRemover.setText("Remover");
         btnRemover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -65,6 +68,11 @@ public class ListagemConsulta extends javax.swing.JFrame {
         });
 
         btnSair.setText("Sair");
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairActionPerformed(evt);
+            }
+        });
 
         btnEditar.setText("Editar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -232,6 +240,10 @@ public class ListagemConsulta extends javax.swing.JFrame {
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
         new RelatorioConsultas().setVisible(true);
     }//GEN-LAST:event_btnImprimirActionPerformed
+
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnSairActionPerformed
     public void montarTabela(String condicao, boolean join) {
         ConsultaController consultaController = new ConsultaController();
         JSONArray registros = consultaController.listarConsulta(condicao, join);
