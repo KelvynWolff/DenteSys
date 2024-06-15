@@ -119,6 +119,7 @@ public class PacienteCadastro extends javax.swing.JFrame {
         tTelefone = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel1.setText("Cadastrar Paciente");
