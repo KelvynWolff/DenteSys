@@ -2,8 +2,6 @@ package oralsys.persistencia;
 
 import java.util.List;
 import oralsys.entidades.Cidade;
-import oralsys.entidades.Cidade;
-import oralsys.entidades.Contato;
 
 public class CidadeDao extends Dao {
     public List listarCidade (String condicao) {   

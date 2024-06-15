@@ -1,20 +1,63 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package oralsys.view;
+
+import javax.swing.JOptionPane;
+import oralsys.controller.FuncionarioController;
+import oralsys.view.listagem.ListagemFuncionario;
+import org.json.JSONObject;
 
 /**
  *
  * @author kelvy
  */
-public class FuncionarioCadastro extends javax.swing.JPanel {
+public class FuncionarioCadastro extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FuncionarioCadastro
-     */
+    ListagemFuncionario listagemFuncionario;
+    String modo = "cadastro";
+    int id = 0;
+
     public FuncionarioCadastro() {
         initComponents();
+    }
+
+    public FuncionarioCadastro(ListagemFuncionario listagemFuncionario) {
+        this.listagemFuncionario = listagemFuncionario;
+        initComponents();
+    }
+
+    public void setNome(String nome) {
+        tNome.setText(nome);
+    }
+
+    public void setCpf(String cpf) {
+        tCPF.setText(cpf);
+    }
+
+    public void setLogin(String login) {
+        tLogin.setText(login);
+    }
+
+    public void setSenha(String senha) {
+        tSenha.setText(senha);
+    }
+
+    public void setFuncao(String funcao) {
+        cbFuncao.setSelectedItem(funcao);
+    }
+
+    public void setModo(String modo) {
+        this.modo = modo;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setFuncionario(String funcionario) {
+        tNome.setText(funcionario);
+    }
+
+    public void setRegistro(String registro) {
+        tCPF.setText(registro);
     }
 
     /**
@@ -29,17 +72,19 @@ public class FuncionarioCadastro extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbFuncao = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        tNome = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        tCPF = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        tLogin = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        tSenha = new javax.swing.JPasswordField();
+        btnSalvar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel1.setText("Nome");
@@ -47,34 +92,44 @@ public class FuncionarioCadastro extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel2.setText("Cadastrar Funcionario");
 
-        jComboBox1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Dentista", "Secretaria", " " }));
+        cbFuncao.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        cbFuncao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Dentista", "Secretaria", " " }));
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel3.setText("Função");
 
-        jTextField1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        tNome.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel4.setText("CPF");
 
-        jTextField2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        tCPF.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel5.setText("Login");
 
-        jTextField3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        tLogin.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel6.setText("Senha");
 
-        jPasswordField1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        tSenha.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
 
-        jButton1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jButton1.setText("Salvar");
+        btnSalvar.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
-        jButton2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jButton2.setText("Cancelar");
+        btnCancelar.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -95,15 +150,15 @@ public class FuncionarioCadastro extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(btnSalvar)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2))
+                        .addComponent(btnCancelar))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jTextField3)
-                        .addComponent(jTextField2)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField1)
-                        .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(tLogin)
+                        .addComponent(tCPF)
+                        .addComponent(cbFuncao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tNome)
+                        .addComponent(tSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(108, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -113,33 +168,33 @@ public class FuncionarioCadastro extends javax.swing.JPanel {
                 .addComponent(jLabel2)
                 .addGap(51, 51, 51)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbFuncao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(60, 60, 60)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnSalvar)
+                    .addComponent(btnCancelar))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -150,13 +205,70 @@ public class FuncionarioCadastro extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        String retorno = salvar();
+    String mensagem = "Funcionario Cadastrado com Sucesso!";
+    if (this.modo.equals("alterar")) {
+        mensagem = "Funcionario Alterado com Sucesso!";
+    }
+    if (retorno.equals("Sucesso!")) {
+        JOptionPane.showMessageDialog(this, mensagem, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        if (listagemFuncionario != null) {
+            listagemFuncionario.montarTabela("");
+        }
+        dispose();
+    } else {
+        JOptionPane.showMessageDialog(this, retorno, "Erro", JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(FuncionarioCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(FuncionarioCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(FuncionarioCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(FuncionarioCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new FuncionarioCadastro().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnSalvar;
+    private javax.swing.JComboBox<String> cbFuncao;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -164,9 +276,33 @@ public class FuncionarioCadastro extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField tCPF;
+    private javax.swing.JTextField tLogin;
+    private javax.swing.JTextField tNome;
+    private javax.swing.JPasswordField tSenha;
     // End of variables declaration//GEN-END:variables
+    
+     public String salvar() {
+        String nome = tNome.getText();
+        String cpf = tCPF.getText();
+        String login = tLogin.getText();
+        String senha = new String(tSenha.getPassword());
+        String funcao = cbFuncao.getSelectedItem().toString();
+        JSONObject json = new JSONObject();
+        json.put("nome", nome);
+        json.put("cpf", cpf);
+        json.put("login", login);
+        json.put("senha", senha);
+        json.put("funcao", funcao);
+        json.put("id", this.id);
+        FuncionarioController funcionarioController = new FuncionarioController();
+        String retorno = "";
+        if (this.modo.equals("cadastro")) {
+            retorno = funcionarioController.cadastrarFuncionario(json);
+        } else {
+            retorno = funcionarioController.alterarFuncionario(this.id, json);
+        }
+        return retorno;
+
+     }
 }

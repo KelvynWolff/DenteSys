@@ -29,13 +29,13 @@ public class ConsultaController implements Controller {
         Consulta consulta = new Consulta();
 
         if (json.has("dentistaId")) {
-            Long dentistaId = json.getLong("dentistaId");
+            int dentistaId = json.getInt("dentistaId");
             Funcionario dentista = converterEntidades.converterFuncionarioPorId(dentistaId);
             consulta.setDentista(dentista);
         }
         
         if (json.has("funcionarioId")) {
-            Long funcionarioId = json.getLong("funcionarioId");
+            int funcionarioId = json.getInt("funcionarioId");
             Funcionario funcionario = converterEntidades.converterFuncionarioPorId(funcionarioId);
             consulta.setFuncionario(funcionario);
         }

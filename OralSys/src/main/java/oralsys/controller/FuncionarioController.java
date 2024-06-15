@@ -3,96 +3,96 @@ package oralsys.controller;
 import java.util.LinkedList;
 import java.util.List;
 import oralsys.entidades.Funcionario;
-import oralsys.entidades.Agendamento;
-import oralsys.entidades.Consulta;
 import oralsys.entidades.Login;
 import oralsys.persistencia.FuncionarioDao;
-import oralsys.persistencia.ConverterEntidades;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class FuncionarioController implements Controller {
-    private FuncionarioDao funcionarioDao;
-    private ConverterEntidades converterEntidades;
+public class FuncionarioController {
 
-    public FuncionarioController() {
-        this.funcionarioDao = new FuncionarioDao();
-        this.converterEntidades = new ConverterEntidades();
+    private FuncionarioDao funcionarioDao = new FuncionarioDao();
+
+    public String cadastrarFuncionario(JSONObject json) {
+        Funcionario funcionario = converte(json);
+        funcionarioDao.salvar(funcionario);
+        return "Sucesso!";
     }
 
-    @Override
+    public String alterarFuncionario(int id, JSONObject json) {
+        Funcionario funcionario = converte(json);
+        funcionario.setId(id);
+        funcionarioDao.atualiza(funcionario);
+        return "Sucesso!";
+    }
+
+    public String excluirFuncionario(int id) {
+        List<String> status = new LinkedList<>();
+        if (id <= 0) {
+            status.add("ID Inválido!");
+            return String.join(", ", status);
+        }
+
+        Funcionario funcionario = funcionarioDao.buscarPorId(id);
+        if (funcionario == null) {
+            status.add("Funcionário não encontrado!");
+            return String.join(", ", status);
+        }
+
+        funcionarioDao.remove(funcionario);
+        status.add("Sucesso!");
+        return String.join(", ", status);
+    }
+
+   public JSONArray listarFuncionario(String condicao) {
+    List<Funcionario> retorno = funcionarioDao.listarFuncionario(condicao);
+    JSONArray jsonArray = new JSONArray();
+
+    for (Funcionario funcionario : retorno) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id", funcionario.getId());
+        jsonObject.put("nome", funcionario.getNome());
+        jsonObject.put("cpf", funcionario.getCpf());
+        jsonObject.put("registro", funcionario.getRegistro());
+        jsonObject.put("login", funcionario.getLogin().getLogin());
+
+        
+        if (funcionario.getFuncao() != null) {
+            jsonObject.put("funcao", funcionario.getFuncao().getNome());
+        } else {
+            jsonObject.put("funcao", JSONObject.NULL);
+        }
+
+        jsonArray.put(jsonObject);
+    }
+
+    return jsonArray;
+}
+
     public Funcionario converte(JSONObject json) {
         if (json == null) {
             throw new IllegalArgumentException("O objeto JSON não pode ser nulo");
         }
 
         Funcionario funcionario = new Funcionario();
+        funcionario.setNome(json.optString("nome"));
+        funcionario.setCpf(json.optString("cpf"));
+        funcionario.setRegistro(json.optString("registro"));
 
-        if (json.has("consultasIds")) {
-            JSONArray consultasIds = json.getJSONArray("consultasIds");
-            List<Consulta> consultas = converterEntidades.converterConsultasPorIds(consultasIds);
-            funcionario.setConsultas(consultas);
-        }
-
-        if (json.has("loginId")) {
-            Long loginId = json.getLong("loginId");
-            Login login = converterEntidades.converterLoginPorId(loginId);
+        if (json.has("login")) {
+            Object loginObj = json.get("login");
+            Login login = new Login();
+            if (loginObj instanceof JSONObject) {
+                JSONObject loginJSON = (JSONObject) loginObj;
+                login.setLogin(loginJSON.getString("login"));
+                login.setSenha(loginJSON.getString("senha"));
+            } else if (loginObj instanceof String) {
+                login.setLogin((String) loginObj);
+                
+                login.setSenha("defaultSenha");
+            }
             funcionario.setLogin(login);
         }
 
-        funcionario.setNome(json.optString("nome"));
-        funcionario.setRegistro(json.optString("registro"));
-
         return funcionario;
-    }
-
-    public String cadastrarFuncionario(JSONObject funcionarioJSON) {
-        List<String> status = new LinkedList<>();
-
-        if (!funcionarioJSON.has("agendamentosIds") || funcionarioJSON.optJSONArray("agendamentosIds").length() == 0) {
-            status.add("Agendamento inválido!");
-        }
-        if (!funcionarioJSON.has("consultasIds") || funcionarioJSON.optJSONArray("consultasIds").length() == 0) {
-            status.add("Consulta inválida!");
-        }
-        if (!funcionarioJSON.has("loginId") || funcionarioJSON.optString("loginId").isEmpty()) {
-            status.add("Login inválido!");
-        }
-        if (funcionarioJSON.optString("nome").isEmpty()) {
-            status.add("Nome inválido!");
-        }
-        if (funcionarioJSON.optString("registro").isEmpty()) {
-            status.add("Registro inválido!");
-        }
-
-        if (status.isEmpty()) {
-            try {
-                Funcionario funcionario = converte(funcionarioJSON);
-                funcionarioDao.salvar(funcionario);
-                status.add("Sucesso!");
-            } catch (IllegalArgumentException e) {
-                status.add(e.getMessage());
-            }
-        }
-
-        return String.join(", ", status);
-    }
-    
-    public JSONArray listarFuncionario(String condicao) {
-        FuncionarioDao funcionarioDao = new FuncionarioDao();
-        List<Funcionario> retorno = funcionarioDao.listarFuncionario(condicao);
-
-        JSONArray jsonArray = new JSONArray();
-
-        for (Funcionario funcionario : retorno) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("id", funcionario.getId());
-            jsonObject.put("nome", funcionario.getNome());
-            jsonObject.put("registro", funcionario.getRegistro());
-            jsonObject.put("funcao", funcionario.getFuncao().getNome());
-            jsonArray.put(jsonObject);
-        }
-
-        return jsonArray;
     }
 }
