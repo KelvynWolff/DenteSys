@@ -10,11 +10,11 @@ import lombok.Data;
 public class Login implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @Column(name = "senha", length = 50)
-    private char[] senha;
+    private String senha;
 
-    @Column(name = "login", length = 50)
+    @Column(name = "login", length = 50, nullable = false, unique = true)
     private String login;
 }

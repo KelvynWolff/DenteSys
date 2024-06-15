@@ -11,7 +11,7 @@ public class Funcionario implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "funcao_id")
@@ -23,12 +23,13 @@ public class Funcionario implements Serializable {
     @Column(nullable = false)
     private String registro;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "login_id")
     private Login login;
 
-    @Column(length = 200)
+    @Column(length = 200, nullable = false)
     private String nome;
-    
-    @Column(length = 14)
+
+    @Column(length = 14, nullable = false)
     private String cpf;
 }

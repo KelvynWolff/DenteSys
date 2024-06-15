@@ -18,6 +18,7 @@ import org.json.JSONObject;
  * @author kelvy
  */
 public class CidadeCadastro extends javax.swing.JFrame {
+    
     ListagemCidade listagemCidade;
     String modo = "cadastro";
     int id = 0;

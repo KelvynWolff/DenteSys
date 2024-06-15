@@ -11,9 +11,9 @@ public class LoginController {
         this.loginDao = new LoginDao();
     }
 
-    public boolean validaAcesso(String loginPesquisa, char[] senha) {
-        Login login = loginDao.buscarPorLogin(loginPesquisa);
-        if (login != null && Arrays.equals(login.getSenha(), senha)) {
+    public boolean autenticar(String login, String senha) {
+        Login usuario = loginDao.buscarPorLogin(login);
+        if (usuario != null && Arrays.equals(usuario.getSenha().toCharArray(), senha.toCharArray())) {
             return true;
         }
         return false;

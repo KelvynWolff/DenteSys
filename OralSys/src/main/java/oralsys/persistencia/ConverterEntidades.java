@@ -82,7 +82,7 @@ public class ConverterEntidades {
         return enderecos;
     }
     
-    public Funcionario converterFuncionarioPorId(Long id) {
+    public Funcionario converterFuncionarioPorId(int id) {
         FuncionarioDao funcionarioDao = new FuncionarioDao();
         return funcionarioDao.buscarPorId(id);
     }
