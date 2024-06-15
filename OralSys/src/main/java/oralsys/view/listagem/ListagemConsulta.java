@@ -13,17 +13,11 @@ import oralsys.view.ConsultaCadastro;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-/**
- *
- * @author rodri
- */
 public class ListagemConsulta extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ListagemCidade
-     */
     public ListagemConsulta() {
         initComponents();
+        montarTabela("", false);
     }
 
     /**
@@ -74,6 +68,11 @@ public class ListagemConsulta extends javax.swing.JFrame {
         });
 
         btnPesquisar.setText("Pesquisar");
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -158,7 +157,7 @@ public class ListagemConsulta extends javax.swing.JFrame {
             if (response == JOptionPane.YES_OPTION) {
                 ConsultaController consultaController = new ConsultaController();
                 consultaController.excluirConsulta((int) id);
-                montarTabela("");
+                montarTabela("", false);
             }
         }
     }//GEN-LAST:event_btnRemoverActionPerformed
@@ -170,7 +169,7 @@ public class ListagemConsulta extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-       int selectedRow = table.getSelectedRow();
+       /*int selectedRow = table.getSelectedRow();
         if (selectedRow >= 0) {
             DefaultTableModel model = (DefaultTableModel) table.getModel();
 
@@ -179,16 +178,22 @@ public class ListagemConsulta extends javax.swing.JFrame {
             Object uf = model.getValueAt(selectedRow, 2);
 
             ConsultaCadastro consultaCadastrar = new ConsultaCadastro(this);
-            /*consultaCadastrar.setCidade((String) nome);
+            consultaCadastrar.setCidade((String) nome);
             consultaCadastrar.setEstado((String) uf);
             cadastroCidade.setModo("alterar");
             cadastroCidade.setId((int) id);
-            cadastroCidade.setVisible(true);*/
-        }
+            cadastroCidade.setVisible(true);
+        }*/
     }//GEN-LAST:event_btnEditarActionPerformed
-    public void montarTabela(String condicao) {
-        CidadeController cidadeController = new CidadeController();
-        JSONArray registros = cidadeController.listarCidade(condicao);
+
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+        String filtro = inputPesquisar.getText().toLowerCase();
+        String condicao = "LOWER(paciente.nome) LIKE '%" + filtro + "%' LEFT JOIN paciente ON ";
+        montarTabela(condicao, true);
+    }//GEN-LAST:event_btnPesquisarActionPerformed
+    public void montarTabela(String condicao, boolean join) {
+        ConsultaController consultaController = new ConsultaController();
+        JSONArray registros = consultaController.listarConsulta(condicao, join);
         
         javax.swing.table.TableModel modelo = table.getModel();
 
@@ -199,10 +204,11 @@ public class ListagemConsulta extends javax.swing.JFrame {
             for (int i = 0; i < registros.length(); i++) {
                 JSONObject registro = registros.getJSONObject(i);
                 int id = registro.getInt("id");
-                String nome = registro.getString("nome");
-                String uf = registro.getString("estado");
-
-                defaultModel.addRow(new Object[]{id, nome, uf});
+                String nome = registro.getString("paciente");
+                String status = registro.getString("status");
+                String dentista = registro.getString("dentista");
+                String observacao = registro.getString("observacao");
+                defaultModel.addRow(new Object[]{id, nome, status, dentista, observacao});
             }
         }
     }
@@ -210,33 +216,6 @@ public class ListagemConsulta extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ListagemConsulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ListagemConsulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ListagemConsulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ListagemConsulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new ListagemConsulta().setVisible(true);

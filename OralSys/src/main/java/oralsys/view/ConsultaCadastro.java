@@ -6,7 +6,6 @@ import oralsys.controller.ConsultaController;
 import oralsys.controller.TipoPagamentoController;
 import oralsys.controller.FuncionarioController;
 import oralsys.controller.PacienteController;
-import static oralsys.entidades.Funcionario_.registro;
 import oralsys.view.listagem.ListagemConsulta;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -227,7 +226,7 @@ public class ConsultaCadastro extends javax.swing.JFrame {
         }
         if (retorno.equals("Sucesso!")) {
             JOptionPane.showMessageDialog(rootPane, mensagem, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-            listagemConsulta.montarTabela("");
+            listagemConsulta.montarTabela("", false);
             dispose();
         } else {
             JOptionPane.showMessageDialog(rootPane, retorno, "Erro", JOptionPane.ERROR_MESSAGE);
@@ -288,6 +287,7 @@ public class ConsultaCadastro extends javax.swing.JFrame {
         JSONObject json = new JSONObject();
         json.put("pacienteId", pacienteId);
         json.put("dentistaId", dentistaId);
+        json.put("funcionarioId", dentistaId);
         json.put("status", status);
         json.put("tipoPagamentosIds", tipoPagamentoId);
         json.put("observacao", observacao);

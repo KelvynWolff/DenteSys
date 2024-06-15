@@ -33,6 +33,12 @@ public class ConsultaController implements Controller {
             Funcionario dentista = converterEntidades.converterFuncionarioPorId(dentistaId);
             consulta.setDentista(dentista);
         }
+        
+        if (json.has("funcionarioId")) {
+            Long funcionarioId = json.getLong("funcionarioId");
+            Funcionario funcionario = converterEntidades.converterFuncionarioPorId(funcionarioId);
+            consulta.setFuncionario(funcionario);
+        }
 
         if (json.has("tipoPagamentosIds")) {
             int tipoPagamentosId = json.getInt("tipoPagamentosIds");
@@ -58,6 +64,41 @@ public class ConsultaController implements Controller {
 
         return consulta;
     }
+    
+    public JSONArray listarConsulta(String condicao, boolean join) {
+        ConsultaDao consultaDao = new ConsultaDao();
+        List<Consulta> retorno = consultaDao.listarConsulta(condicao, join);
+
+        JSONArray jsonArray = new JSONArray();
+
+        for (Consulta consulta : retorno) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", consulta.getId());
+            
+            Funcionario dentista = consulta.getDentista();
+            if (dentista != null) {
+                jsonObject.put("dentista", dentista.getNome());
+            } else {
+                jsonObject.put("dentista", "--");
+            }
+            
+            String observacao = consulta.getObservacao();
+            jsonObject.put("observacao", observacao != null ? observacao : "--");
+            
+            Paciente paciente = consulta.getPaciente();
+            if (paciente != null) {
+                jsonObject.put("paciente", paciente.getNome());
+            } else {
+                jsonObject.put("paciente", "--");
+            }
+
+            jsonObject.put("status", consulta.getStatus());
+            jsonArray.put(jsonObject);
+        }
+
+        return jsonArray;
+    }
+
 
     public String marcarConsulta(JSONObject consultaJSON) {
         List<String> status = new LinkedList<>();
