@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry excluding="oralsys/view/" kind="src" path="OralSys/src/main/java"/>
+	<classpathentry kind="src" path="OralSys/src/main/java/oralsys/view"/>
+	<classpathentry kind="src" path="OralSys/target/generated-sources/annotations"/>
+	<classpathentry kind="lib" path="OralSys/target/OralSys-1.0-SNAPSHOT.jar"/>
+	<classpathentry kind="output" path="OralSys/target/classes"/>
+</classpath>

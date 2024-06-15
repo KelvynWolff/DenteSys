@@ -34,8 +34,9 @@ public class Consulta implements Serializable {
     @Column(length = 15)
     private String status;
 
-    @OneToOne(mappedBy = "consulta")
-    private TipoPagamento tipoPagamentos;
+    @ManyToOne
+    @JoinColumn(name = "tipo_pagamento_id")
+    private TipoPagamento tipoPagamento;
 
     @OneToMany(mappedBy = "consulta")
     private List<Prontuario> prontuarios;

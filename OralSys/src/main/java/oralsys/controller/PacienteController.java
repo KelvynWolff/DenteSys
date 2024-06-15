@@ -5,13 +5,16 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import oralsys.entidades.Agendamento;
 import oralsys.entidades.Consulta;
+import static oralsys.entidades.Consulta_.paciente;
 import oralsys.entidades.Contato;
+import oralsys.entidades.Endereco;
 import oralsys.entidades.Paciente;
 import oralsys.entidades.Prontuario;
+import oralsys.persistencia.ContatoDao;
 import oralsys.persistencia.PacienteDao;
 import oralsys.persistencia.ConverterEntidades;
+import oralsys.persistencia.EnderecoDao;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -25,92 +28,78 @@ public class PacienteController implements Controller {
     }
     
     public String inserirPaciente(JSONObject pacienteJSON) {
-        List status = new LinkedList();
-        if (pacienteJSON.get("agendamentos").equals("") || pacienteJSON.get("agendamentos") == null) {
-            status.add("Agendamento invalido!");
-        }
-        if (pacienteJSON.get("consultas").equals("") || pacienteJSON.get("consultas") == null) {
-            status.add("Consultas invalido!");
-        }
-        if (pacienteJSON.get("contatos").equals("") || pacienteJSON.get("contatos") == null) {
-            status.add("Contato invalido!");
-        }
-        if (pacienteJSON.get("cpf").equals("") || pacienteJSON.get("cpf") == null) {
-            status.add("CPF invalido!");
-        }
-        if (pacienteJSON.get("dataNascimento").equals("") || pacienteJSON.get("dataNascimento") == null) {
-            status.add("Data Nascimento invalido!");
-        }
-        if (pacienteJSON.get("pacienteId").equals("") || pacienteJSON.get("pacienteId") == null) {
-            status.add("PacienteId invalido!");
-        }
-        if (pacienteJSON.get("nome").equals("") || pacienteJSON.get("nome") == null) {
-            status.add("Nome invalido!");
-        }
-        if (pacienteJSON.get("numeroCasa").equals("") || pacienteJSON.get("numeroCasa") == null) {
-            status.add("Numero da Casa invalido!");
-        }
-        if (pacienteJSON.get("pacientes").equals("") || pacienteJSON.get("pacientes") == null) {
-            status.add("Pacientes invalido!");
-        }
-        if (pacienteJSON.get("prontuarios").equals("") || pacienteJSON.get("prontuarios") == null) {
-            status.add("Prontuarios invalido!");
-        }
-        if (pacienteJSON.get("responsavel").equals("") || pacienteJSON.get("responsavel") == null) {
-            status.add("Responsavel invalido!");
-        }
-        if (status.isEmpty()) {
-            Paciente paciente = new Paciente();
+     List<String> status = new LinkedList<>();
+     
+     String cpf = pacienteJSON.optString("cpf");
+     if (cpf.isEmpty()) {
+         status.add("CPF inválido!");
+     }
 
-            if (pacienteJSON.has("consultasIds")) {
-                JSONArray consultasIds = pacienteJSON.getJSONArray("consultasIds");
-                List<Consulta> consultas = converterEntidades.converterConsultasPorIds(consultasIds);
-                paciente.setConsultas(consultas);
-            }
+     String nome = pacienteJSON.optString("nome");
+     if (nome.isEmpty()) {
+         status.add("Nome inválido!");
+     }
 
-            if (pacienteJSON.has("contatosIds")) {
-                JSONArray contatosIds = pacienteJSON.getJSONArray("contatosIds");
-                List<Contato> contatos = converterEntidades.converterContatosPorIds(contatosIds);
-                paciente.setContatos(contatos);
-            }
+     String dataNascimentoStr = pacienteJSON.optString("dataNascimento");
+     if (dataNascimentoStr.isEmpty()) {
+         status.add("Data de Nascimento inválida!");
+     }
+     
+     String enderecoString = pacienteJSON.optString("endereco");
+     EnderecoController enderecoController = new EnderecoController();
+     JSONArray registros = enderecoController.listarEndereco("rua like '%" + enderecoString + "%'");
+     int enderecoId = registros.getJSONObject(0).getInt("id");
+     EnderecoDao enderecoDao = new EnderecoDao();
+     Endereco endereco = enderecoDao.buscarPorId((long) enderecoId);
+     
+    
+     String numeroCasa = pacienteJSON.optString("numeroCasa");
+     if (numeroCasa.isEmpty()) {
+         status.add("Número da Casa inválido!");
+     }
 
-            paciente.setCpf(pacienteJSON.optString("cpf"));
-            String dataStr = pacienteJSON.optString("dataNascimento");
-            if (!dataStr.isEmpty()) {
-                try {
-                    Date dataNascimento = new SimpleDateFormat("yyyy-MM-dd").parse(dataStr);
-                    paciente.setDataNascimento(dataNascimento);
-                } catch (ParseException e) {
-                    status.add("Formato de data inválido!");
-                }
-            }
+     Long responsavelId = pacienteJSON.optLong("responsavelId", -1);
+     Paciente responsavel = null;
+     if (responsavelId != -1) {
+         responsavel = pacienteDao.buscarPorId(responsavelId);
+         if (responsavel == null) {
+             status.add("Responsável inválido!");
+         }
+     }
 
-            if (pacienteJSON.has("pacientesIds")) {
-                JSONArray pacientesIds = pacienteJSON.getJSONArray("pacientesIds");
-                List<Paciente> pacientes = converterEntidades.converterPacientesPorIds(pacientesIds);
-                paciente.setPacientes(pacientes);
-            }
+     if (status.isEmpty()) {
+         Paciente paciente = new Paciente();
+         paciente.setCpf(cpf);
+         paciente.setNome(nome);
 
-            if (pacienteJSON.has("prontuariosIds")) {
-                JSONArray prontuariosIds = pacienteJSON.getJSONArray("prontuariosIds");
-                List<Prontuario> prontuarios = converterEntidades.converterProntuariosPorIds(prontuariosIds);
-                paciente.setProntuarios(prontuarios);
-            }
+         try {
+             Date dataNascimento = new SimpleDateFormat("yyyy-MM-dd").parse(dataNascimentoStr);
+             paciente.setDataNascimento(dataNascimento);
+         } catch (ParseException e) {
+             status.add("Formato de data inválido!");
+         }
 
-            if (pacienteJSON.has("responsavelId")) {
-                Long responsavelId = pacienteJSON.optLong("responsavelId");
-                Paciente responsavel = pacienteDao.buscarPorId(responsavelId);
-                paciente.setResponsavel(responsavel);
-            }
+         if (responsavel != null) {
+             paciente.setResponsavel(responsavel);
+         }
+         
+         if (endereco != null) {
+             paciente.setEndereco(endereco);
+         }
 
-            if (status.isEmpty()) {
-                pacienteDao.salvar(paciente);
-                status.add("Sucesso!");
-            }
-        }
-
-        return status.toString();
+         pacienteDao.salvar(paciente);
+         status.add("Sucesso!");
+        String telefone = pacienteJSON.optString("telefone");
+        Contato contato = new Contato();
+        contato.setPaciente(paciente);
+        contato.setTelefone(telefone);
+        ContatoDao contatoDao = new ContatoDao();
+        contatoDao.salvar(contato);
+     }
+     return String.join(", ", status);
     }
+
+
     
     public String alterarPaciente(String id, JSONObject pacienteJSON) {
         List<String> status = new LinkedList<>();
@@ -137,7 +126,7 @@ public class PacienteController implements Controller {
         }
         paciente.setCpf(pacienteJSON.optString("cpf", paciente.getCpf()));
         paciente.setNome(pacienteJSON.optString("nome", paciente.getNome()));
-        paciente.setNumeroCasa(pacienteJSON.optString("numeroCasa", paciente.getNumeroCasa()));
+        paciente.setNumeroCasa(pacienteJSON.optString("numeroCasa"));
 
         String dataNascimentoStr = pacienteJSON.optString("dataNascimento");
         if (!dataNascimentoStr.isEmpty()) {
@@ -172,14 +161,14 @@ public class PacienteController implements Controller {
         return String.join(", ", status);
     }
 
-    public String removerPaciente(String id) {
+    public String removerPaciente(int id) {
         List<String> status = new LinkedList<>();
-        if (id == null || id.isEmpty()) {
+        if (id == 0) {
             status.add("ID Invalido!");
             return String.join(", ", status);
         }
 
-        Paciente paciente = pacienteDao.buscarPorId(Long.parseLong(id));
+        Paciente paciente = pacienteDao.buscarPorId((long) id);
         if (paciente == null) {
             status.add("Paciente não encontrado!");
             return String.join(", ", status);
@@ -190,15 +179,28 @@ public class PacienteController implements Controller {
         return String.join(", ", status);
     }
     
-    public JSONArray listarPaciente(String condicao) {
+    public JSONArray listarPaciente(String condicao, boolean join) {
         PacienteDao pacienteDao = new PacienteDao();
-        List<Paciente> retorno = pacienteDao.listarPaciente(condicao);
+        List<Paciente> retorno = pacienteDao.listarPaciente(condicao, join);
 
         JSONArray jsonArray = new JSONArray();
 
         for (Paciente paciente : retorno) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("id", paciente.getId());
+            jsonObject.put("nome", paciente.getNome());
+            jsonObject.put("dataNascimento", paciente.getDataNascimento() + "");
+            jsonObject.put("cpf", paciente.getCpf());
+            jsonObject.put("numeroCasa", paciente.getNumeroCasa());
+            if (paciente.getEndereco() != null) {
+                jsonObject.put("endereco", paciente.getEndereco().getRua());
+                jsonObject.put("cidade", paciente.getEndereco().getCidade().getNome());
+                jsonObject.put("estado", paciente.getEndereco().getCidade().getEstado().getUf());
+            } else {
+                jsonObject.put("endereco", "");
+                jsonObject.put("cidade", "");
+                jsonObject.put("estado", "");
+            }
             jsonArray.put(jsonObject);
         }
 

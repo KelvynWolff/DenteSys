@@ -27,4 +27,7 @@ public class Contato {
 
     @Column(length = 255)
     private String informacao;
+    
+    @Column(length = 255)
+    private String telefone;
 }

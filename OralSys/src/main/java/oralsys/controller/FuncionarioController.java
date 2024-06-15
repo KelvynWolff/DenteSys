@@ -3,7 +3,6 @@ package oralsys.controller;
 import java.util.LinkedList;
 import java.util.List;
 import oralsys.entidades.Funcionario;
-import oralsys.entidades.Agendamento;
 import oralsys.entidades.Consulta;
 import oralsys.entidades.Login;
 import oralsys.persistencia.FuncionarioDao;

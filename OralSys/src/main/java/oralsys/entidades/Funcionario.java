@@ -28,7 +28,7 @@ public class Funcionario implements Serializable {
 
     @Column(length = 200)
     private String nome;
-
-    @OneToMany(mappedBy = "funcionario")
-    private List<Agendamento> agendamentos;
+    
+    @Column(length = 14)
+    private String cpf;
 }

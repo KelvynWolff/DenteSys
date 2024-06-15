@@ -126,4 +126,19 @@ public class EnderecoController implements Controller {
 
         return String.join(", ", status);
     }
+    
+    public JSONArray listarEndereco(String condicao) {
+        EnderecoDao enderecoDao = new EnderecoDao();
+        List<Endereco> retorno = enderecoDao.listarEndereco(condicao);
+
+        JSONArray jsonArray = new JSONArray();
+
+        for (Endereco endereco : retorno) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", endereco.getId());
+            jsonArray.put(jsonObject);
+        }
+
+        return jsonArray;
+    }
 }

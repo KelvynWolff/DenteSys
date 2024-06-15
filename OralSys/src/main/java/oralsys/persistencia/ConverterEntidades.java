@@ -3,7 +3,6 @@ package oralsys.persistencia;
 import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.List;
-import oralsys.entidades.Agendamento;
 import oralsys.entidades.Cidade;
 import oralsys.entidades.Consulta;
 import oralsys.entidades.Contato;

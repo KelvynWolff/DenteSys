@@ -6,18 +6,15 @@ package oralsys.view.listagem;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import oralsys.controller.CidadeController;
-import oralsys.controller.ConsultaController;
-import static oralsys.entidades.Consulta_.dentista;
-import static oralsys.entidades.FormaPagamento_.tipoPagamento;
-import oralsys.view.CidadeCadastro;
-import oralsys.view.ConsultaCadastro;
+import oralsys.controller.ContatoController;
+import oralsys.controller.PacienteController;
+import oralsys.view.PacienteCadastro;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class ListagemConsulta extends javax.swing.JFrame {
+public class ListagemPaciente extends javax.swing.JFrame {
 
-    public ListagemConsulta() {
+    public ListagemPaciente() {
         initComponents();
         montarTabela("", false);
     }
@@ -76,13 +73,13 @@ public class ListagemConsulta extends javax.swing.JFrame {
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "ID", "Paciente", "Status", "Dentista", "Observacao"
+                "ID", "Paciente", "Data Nascimento", "Endereco"
             }
         ));
         jScrollPane1.setViewportView(table);
@@ -155,17 +152,17 @@ public class ListagemConsulta extends javax.swing.JFrame {
 
             int response = JOptionPane.showConfirmDialog(null, "Você tem certeza que deseja excluir?", "Confirmar Ação", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (response == JOptionPane.YES_OPTION) {
-                ConsultaController consultaController = new ConsultaController();
-                consultaController.excluirConsulta((int) id);
+                PacienteController pacienteController = new PacienteController();
+                pacienteController.removerPaciente((int) id);
                 montarTabela("", false);
             }
         }
     }//GEN-LAST:event_btnRemoverActionPerformed
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
-        ConsultaCadastro consultaCadastro = new ConsultaCadastro(this);
-        consultaCadastro.setModo("cadastro");
-        consultaCadastro.setVisible(true);
+        PacienteCadastro pacienteCadastro = new PacienteCadastro(this);
+        pacienteCadastro.setModo("cadastro");
+        pacienteCadastro.setVisible(true);
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
@@ -173,38 +170,37 @@ public class ListagemConsulta extends javax.swing.JFrame {
         if (selectedRow >= 0) {
             DefaultTableModel model = (DefaultTableModel) table.getModel();
             Object id = model.getValueAt(selectedRow, 0);
-            ConsultaController consultaController = new ConsultaController();
+            PacienteController pacienteController = new PacienteController();
             
             String condicao = "id='" + id + "'";
-            JSONArray registros = consultaController.listarConsulta(condicao, false);
+            JSONArray registros = pacienteController.listarPaciente(condicao, false);
 
             if (registros != null && registros.length() > 0) {
                 JSONObject registro = registros.getJSONObject(0);
-                String cpfPaciente = registro.optString("pacienteCpf");
-                String status = registro.optString("status");
-                String dentistaId = registro.optString("dentistaId");
-                String observacao = registro.optString("observacao");
-                String tipoPagamento = registro.optString("tipoPagamento");
-                
-                int dentista = 0, tipoPagamentoId = 0;
-                try {
-                    dentista = Integer.parseInt(dentistaId);
-                    tipoPagamentoId = Integer.parseInt(tipoPagamento);
-                } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null, "Erro ao converter dados: " + e.getMessage());
-                    return;
-                }
-                
-                System.out.println(dentista);
-                System.out.println(tipoPagamentoId);
+                String nome = registro.optString("nome");
+                String dataNascimento = registro.optString("dataNacimento");
+                String cpf = registro.optString("cpf");
+                String numeroCasa = registro.optString("numeroCasa");
+                String endereco = registro.optString("endereco");
+                String cidade = registro.optString("cidade");
+                String estado = registro.optString("estado");
+                ContatoController contatoController = new ContatoController();
+                String condicao_contato = "paciente_id='" + id + "'";
+                JSONArray registros_telefone = contatoController.listarContato(condicao_contato, false);
+                String telefone = registros_telefone.getJSONObject(0).optString("telefone");
 
-                ConsultaCadastro consultaCadastro = new ConsultaCadastro(this);
-                consultaCadastro.inicio(dentista, tipoPagamentoId);
-                consultaCadastro.setObservacoes(observacao);
-                consultaCadastro.setPaciente(cpfPaciente);
-                consultaCadastro.setModo("alterar");
-                consultaCadastro.setId((int) id);
-                consultaCadastro.setVisible(true);
+                PacienteCadastro pacienteCadastro = new PacienteCadastro(this);
+                pacienteCadastro.setNome(nome);
+                pacienteCadastro.setDataNascimento(dataNascimento);
+                pacienteCadastro.setCPF(cpf);
+                pacienteCadastro.setNumero(numeroCasa);
+                pacienteCadastro.setEndereco(endereco);
+                pacienteCadastro.setCidade(cidade);
+                pacienteCadastro.setEstado(estado);
+                pacienteCadastro.setTelefone(telefone);
+                pacienteCadastro.setModo("alterar");
+                pacienteCadastro.setId((int) id);
+                pacienteCadastro.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(null, "Não foram encontrados registros para o ID selecionado.");
             }
@@ -215,16 +211,17 @@ public class ListagemConsulta extends javax.swing.JFrame {
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         String filtro = inputPesquisar.getText().toLowerCase();
+        String condicao = "nome like '%" + filtro + "%'";
         if (filtro.equals("")) {
             montarTabela("", false);
-        } else { 
-            String condicao = " LEFT JOIN paciente ON consulta.paciente_id = paciente.id WHERE LOWER(paciente.nome) LIKE '%" + filtro + "%'";
-            montarTabela(condicao, true);
+        } else {
+            montarTabela(condicao, false);
         }
+        
     }//GEN-LAST:event_btnPesquisarActionPerformed
     public void montarTabela(String condicao, boolean join) {
-        ConsultaController consultaController = new ConsultaController();
-        JSONArray registros = consultaController.listarConsulta(condicao, join);
+        PacienteController pacienteController = new PacienteController();
+        JSONArray registros = pacienteController.listarPaciente(condicao, join);
         
         javax.swing.table.TableModel modelo = table.getModel();
 
@@ -235,11 +232,10 @@ public class ListagemConsulta extends javax.swing.JFrame {
             for (int i = 0; i < registros.length(); i++) {
                 JSONObject registro = registros.getJSONObject(i);
                 int id = registro.getInt("id");
-                String nome = registro.getString("paciente");
-                String status = registro.getString("status");
-                String dentista = registro.getString("dentista");
-                String observacao = registro.getString("observacao");
-                defaultModel.addRow(new Object[]{id, nome, status, dentista, observacao});
+                String nome = registro.getString("nome");
+                String dataNascimento = registro.getString("dataNascimento");
+                String endereco = registro.getString("endereco");
+                defaultModel.addRow(new Object[]{id, nome, dataNascimento, endereco});
             }
         }
     }
@@ -249,7 +245,7 @@ public class ListagemConsulta extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ListagemConsulta().setVisible(true);
+                new ListagemPaciente().setVisible(true);
             }
         });
     }

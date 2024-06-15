@@ -4,6 +4,15 @@
  */
 package oralsys.view;
 
+import oralsys.view.listagem.ListagemCidade;
+import oralsys.view.listagem.ListagemConsulta;
+import oralsys.view.listagem.ListagemPaciente;
+import oralsys.view.relatorios.RelatorioCidades;
+import oralsys.view.relatorios.RelatorioConsultas;
+import oralsys.view.relatorios.RelatorioFuncionarios;
+import oralsys.view.relatorios.RelatorioMateriais;
+import oralsys.view.relatorios.RelatorioPacientes;
+
 /**
  *
  * @author kelvy
@@ -29,57 +38,111 @@ public class Menu extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jClienteCadastrar = new javax.swing.JMenu();
-        jClienteListar = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jConsultaCadastrar = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
-        jMaterialCadastrar = new javax.swing.JMenuItem();
-        jMaterialListar = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
+        cadastro = new javax.swing.JMenu();
+        btnCidade = new javax.swing.JMenuItem();
+        btnConsulta = new javax.swing.JMenuItem();
+        btnMaterial = new javax.swing.JMenuItem();
+        btnPaciente = new javax.swing.JMenuItem();
+        btnFuncionario = new javax.swing.JMenuItem();
+        relatorio = new javax.swing.JMenu();
+        funcionario = new javax.swing.JMenuItem();
+        paciente = new javax.swing.JMenuItem();
+        consulta = new javax.swing.JMenuItem();
+        cidade = new javax.swing.JMenuItem();
+        material = new javax.swing.JMenuItem();
+        logoff = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\kelvy\\OneDrive\\Área de Trabalho\\OralSys\\OralSys\\OralSys\\src\\main\\java\\imagens\\DALLE2_1.png")); // NOI18N
-        jLabel2.setText("jLabel2");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 799, 576));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DALLE2_1.png"))); // NOI18N
 
-        jMenu1.setText("Cliente");
+        cadastro.setText("Cadastro");
+        cadastro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cadastroActionPerformed(evt);
+            }
+        });
 
-        jClienteCadastrar.setText("Cadastrar Cliente");
-        jMenu1.add(jClienteCadastrar);
+        btnCidade.setText("Cidade");
+        btnCidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCidadeActionPerformed(evt);
+            }
+        });
+        cadastro.add(btnCidade);
 
-        jClienteListar.setText("Listar Cliente");
-        jMenu1.add(jClienteListar);
+        btnConsulta.setText("Consulta");
+        btnConsulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultaActionPerformed(evt);
+            }
+        });
+        cadastro.add(btnConsulta);
 
-        jMenuBar1.add(jMenu1);
+        btnMaterial.setText("Material");
+        cadastro.add(btnMaterial);
 
-        jMenu2.setText("Consulta");
+        btnPaciente.setText("Paciente");
+        btnPaciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPacienteActionPerformed(evt);
+            }
+        });
+        cadastro.add(btnPaciente);
 
-        jConsultaCadastrar.setText("Cadastrar Consulta");
-        jMenu2.add(jConsultaCadastrar);
+        btnFuncionario.setText(" Funcionario");
+        cadastro.add(btnFuncionario);
 
-        jMenuItem1.setText("Listar Consulta");
-        jMenu2.add(jMenuItem1);
+        jMenuBar1.add(cadastro);
 
-        jMenuBar1.add(jMenu2);
+        relatorio.setText("Relatorios");
 
-        jMenu4.setText("Material");
+        funcionario.setText("Funcionario");
+        funcionario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                funcionarioActionPerformed(evt);
+            }
+        });
+        relatorio.add(funcionario);
 
-        jMaterialCadastrar.setText("Cadastrar Material");
-        jMenu4.add(jMaterialCadastrar);
+        paciente.setText("Paciente");
+        paciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pacienteActionPerformed(evt);
+            }
+        });
+        relatorio.add(paciente);
 
-        jMaterialListar.setText("Listar Material");
-        jMenu4.add(jMaterialListar);
+        consulta.setText("Consultas");
+        consulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consultaActionPerformed(evt);
+            }
+        });
+        relatorio.add(consulta);
 
-        jMenuBar1.add(jMenu4);
+        cidade.setText("Cidades");
+        cidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cidadeActionPerformed(evt);
+            }
+        });
+        relatorio.add(cidade);
 
-        jMenu3.setText("Logoff");
-        jMenuBar1.add(jMenu3);
+        material.setText("Materiais");
+        material.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                materialActionPerformed(evt);
+            }
+        });
+        relatorio.add(material);
+
+        jMenuBar1.add(relatorio);
+
+        logoff.setText("Logoff");
+        jMenuBar1.add(logoff);
 
         setJMenuBar(jMenuBar1);
 
@@ -88,47 +151,63 @@ public class Menu extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 1, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastroActionPerformed
+        
+    }//GEN-LAST:event_cadastroActionPerformed
+
+    private void btnCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCidadeActionPerformed
+        ListagemCidade listagemCidade = new ListagemCidade();
+        listagemCidade.setVisible(true);
+    }//GEN-LAST:event_btnCidadeActionPerformed
+
+    private void btnConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaActionPerformed
+        new ListagemConsulta().setVisible(true);
+    }//GEN-LAST:event_btnConsultaActionPerformed
+
+    private void btnPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPacienteActionPerformed
+        new ListagemPaciente().setVisible(true);
+    }//GEN-LAST:event_btnPacienteActionPerformed
+
+    private void funcionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_funcionarioActionPerformed
+        new RelatorioFuncionarios().setVisible(true);
+    }//GEN-LAST:event_funcionarioActionPerformed
+
+    private void pacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pacienteActionPerformed
+        new RelatorioPacientes().setVisible(true);
+    }//GEN-LAST:event_pacienteActionPerformed
+
+    private void consultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaActionPerformed
+        new RelatorioConsultas().setVisible(true);
+    }//GEN-LAST:event_consultaActionPerformed
+
+    private void cidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cidadeActionPerformed
+        new RelatorioCidades().setVisible(true);
+    }//GEN-LAST:event_cidadeActionPerformed
+
+    private void materialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_materialActionPerformed
+        new RelatorioMateriais().setVisible(true);
+    }//GEN-LAST:event_materialActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Menu().setVisible(true);
@@ -137,18 +216,21 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jClienteCadastrar;
-    private javax.swing.JMenuItem jClienteListar;
-    private javax.swing.JMenuItem jConsultaCadastrar;
+    private javax.swing.JMenuItem btnCidade;
+    private javax.swing.JMenuItem btnConsulta;
+    private javax.swing.JMenuItem btnFuncionario;
+    private javax.swing.JMenuItem btnMaterial;
+    private javax.swing.JMenuItem btnPaciente;
+    private javax.swing.JMenu cadastro;
+    private javax.swing.JMenuItem cidade;
+    private javax.swing.JMenuItem consulta;
+    private javax.swing.JMenuItem funcionario;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JMenuItem jMaterialCadastrar;
-    private javax.swing.JMenuItem jMaterialListar;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JMenu logoff;
+    private javax.swing.JMenuItem material;
+    private javax.swing.JMenuItem paciente;
+    private javax.swing.JMenu relatorio;
     // End of variables declaration//GEN-END:variables
 }

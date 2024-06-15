@@ -12,22 +12,6 @@ public class Login implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "funcionario_id")
-    private Funcionario funcionario;
-
-    @ManyToOne
-    @JoinColumn(name = "funcao_id")
-    private Funcao funcao;
-
-    @ManyToMany
-    @JoinTable(
-        name = "login_material", 
-        joinColumns = @JoinColumn(name = "login_id"), 
-        inverseJoinColumns = @JoinColumn(name = "material_id")
-    )
-    private List<Material> materials;
-
     @Column(name = "senha", length = 50)
     private char[] senha;
 

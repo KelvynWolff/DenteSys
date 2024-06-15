@@ -43,7 +43,7 @@ public class ConsultaController implements Controller {
         if (json.has("tipoPagamentosIds")) {
             int tipoPagamentosId = json.getInt("tipoPagamentosIds");
             TipoPagamento tipoPagamentos = converterEntidades.converterTipoPagamentosPorIds(tipoPagamentosId);
-            consulta.setTipoPagamentos(tipoPagamentos);
+            consulta.setTipoPagamento(tipoPagamentos);
         }
 
         consulta.setObservacao(json.optString("observacao"));
@@ -78,9 +78,13 @@ public class ConsultaController implements Controller {
             Funcionario dentista = consulta.getDentista();
             if (dentista != null) {
                 jsonObject.put("dentista", dentista.getNome());
+                jsonObject.put("dentistaId", dentista.getId());
             } else {
                 jsonObject.put("dentista", "--");
             }
+            
+            
+            jsonObject.put("tipoPagamento", consulta.getTipoPagamento().getId());
             
             String observacao = consulta.getObservacao();
             jsonObject.put("observacao", observacao != null ? observacao : "--");
@@ -88,6 +92,7 @@ public class ConsultaController implements Controller {
             Paciente paciente = consulta.getPaciente();
             if (paciente != null) {
                 jsonObject.put("paciente", paciente.getNome());
+                jsonObject.put("pacienteCpf", paciente.getCpf());
             } else {
                 jsonObject.put("paciente", "--");
             }

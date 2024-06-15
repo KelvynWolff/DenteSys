@@ -17,13 +17,13 @@ public class ConsultaCadastro extends javax.swing.JFrame {
 
     public ConsultaCadastro() {
         initComponents();
-        inicio();
+        inicio(0, 0);
     }
     
     public ConsultaCadastro(ListagemConsulta listagemConsulta) {
         this.listagemConsulta = listagemConsulta;
         initComponents();
-        inicio();
+        inicio(0, 0);
     }
     
     public void setPaciente(String cpf) {
@@ -280,7 +280,7 @@ public class ConsultaCadastro extends javax.swing.JFrame {
         this.setId(dentistaId);
         PacienteController pacienteController = new PacienteController();
         String condicao_paciente = "cpf='"+ cpfPaciente + "'";
-        JSONArray retorno_paciente = pacienteController.listarPaciente(condicao_paciente);
+        JSONArray retorno_paciente = pacienteController.listarPaciente(condicao_paciente, false);
         JSONObject registro_paciente = retorno_paciente.getJSONObject(0);
         int pacienteId = registro_paciente.getInt("id");
 
@@ -303,23 +303,41 @@ public class ConsultaCadastro extends javax.swing.JFrame {
         return retorno;
     }
     
-    public void inicio() {
-        FuncionarioController funcionarioController = new FuncionarioController();
-        JSONArray array = funcionarioController.listarFuncionario("funcao_id='1'");
-        for (int i = 0; i < array.length(); i++) {
-            JSONObject registro = array.getJSONObject(i);
-            String item = registro.getInt("id") + " - " + registro.getString("nome");
-            sDentista.addItem(item);
+    public void inicio(int funcionarioId, int tipoPagamentoId) {
+        if (funcionarioId == 0 && tipoPagamentoId == 0) {
+            FuncionarioController funcionarioController = new FuncionarioController();
+            JSONArray array = funcionarioController.listarFuncionario("funcao_id='1'");
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject registro = array.getJSONObject(i);
+                String item = registro.getInt("id") + " - " + registro.getString("nome");
+                sDentista.addItem(item);
+            }
+
+            TipoPagamentoController tipoPagamentoController = new TipoPagamentoController();
+            JSONArray array2 = tipoPagamentoController.listarTipoPagamento("");
+            for (int i = 0; i < array2.length(); i++) {
+                JSONObject registro = array2.getJSONObject(i);
+                String item = registro.getInt("id") + " - " + registro.getString("nome");
+                sTipoPagamento.addItem(item);
+            }
+        } else {
+            sDentista.removeAllItems();
+            FuncionarioController funcionarioController = new FuncionarioController();
+            JSONArray array = funcionarioController.listarFuncionario("id='" + funcionarioId + "'");
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject registro = array.getJSONObject(i);
+                String item = registro.getInt("id") + " - " + registro.getString("nome");
+                sDentista.addItem(item);
+            }
+
+            TipoPagamentoController tipoPagamentoController = new TipoPagamentoController();
+            JSONArray array2 = tipoPagamentoController.listarTipoPagamento("id='" + tipoPagamentoId + "'");
+            for (int i = 0; i < array2.length(); i++) {
+                JSONObject registro = array2.getJSONObject(i);
+                String item = registro.getInt("id") + " - " + registro.getString("nome");
+                sTipoPagamento.addItem(item);
+            }   
         }
-        
-        TipoPagamentoController tipoPagamentoController = new TipoPagamentoController();
-        JSONArray array2 = tipoPagamentoController.listarTipoPagamento("");
-        for (int i = 0; i < array2.length(); i++) {
-            JSONObject registro = array2.getJSONObject(i);
-            String item = registro.getInt("id") + " - " + registro.getString("nome");
-            sTipoPagamento.addItem(item);
-        }
-        
     }
 
 

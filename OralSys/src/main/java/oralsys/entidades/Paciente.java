@@ -34,9 +34,6 @@ public class Paciente implements Serializable {
     private List<Contato> contatos;
 
     @OneToMany(mappedBy = "paciente")
-    private List<Agendamento> agendamentos;
-
-    @OneToMany(mappedBy = "paciente")
     private List<Prontuario> prontuarios;
 
     @Column(length = 20)

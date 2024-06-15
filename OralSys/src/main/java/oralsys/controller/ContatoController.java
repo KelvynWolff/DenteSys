@@ -7,6 +7,7 @@ import oralsys.entidades.Paciente;
 import oralsys.entidades.TipoContato;
 import oralsys.persistencia.ContatoDao;
 import oralsys.persistencia.ConverterEntidades;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class ContatoController implements Controller {
@@ -120,5 +121,20 @@ public class ContatoController implements Controller {
         }
 
         return contato;
+    }
+    
+    public JSONArray listarContato(String condicao, boolean join) {
+        ContatoDao contatoDao = new ContatoDao();
+        List<Contato> retorno = contatoDao.listarContato(condicao);
+
+        JSONArray jsonArray = new JSONArray();
+
+        for (Contato contato : retorno) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("telefone", contato.getTelefone());
+            jsonArray.put(jsonObject);
+        }
+
+        return jsonArray;
     }
 }
