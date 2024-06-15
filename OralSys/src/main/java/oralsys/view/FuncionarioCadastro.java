@@ -282,19 +282,24 @@ public class FuncionarioCadastro extends javax.swing.JFrame {
     private javax.swing.JPasswordField tSenha;
     // End of variables declaration//GEN-END:variables
     
-     public String salvar() {
+    public String salvar() {
         String nome = tNome.getText();
         String cpf = tCPF.getText();
         String login = tLogin.getText();
         String senha = new String(tSenha.getPassword());
         String funcao = cbFuncao.getSelectedItem().toString();
+
+        JSONObject jsonLogin = new JSONObject();
+        jsonLogin.put("login", login);
+        jsonLogin.put("senha", senha);
+
         JSONObject json = new JSONObject();
         json.put("nome", nome);
         json.put("cpf", cpf);
-        json.put("login", login);
-        json.put("senha", senha);
+        json.put("login", jsonLogin);
         json.put("funcao", funcao);
         json.put("id", this.id);
+
         FuncionarioController funcionarioController = new FuncionarioController();
         String retorno = "";
         if (this.modo.equals("cadastro")) {
@@ -303,6 +308,6 @@ public class FuncionarioCadastro extends javax.swing.JFrame {
             retorno = funcionarioController.alterarFuncionario(this.id, json);
         }
         return retorno;
+    }
 
-     }
 }

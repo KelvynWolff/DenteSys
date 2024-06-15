@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import oralsys.controller.CidadeController;
 import oralsys.view.CidadeCadastro;
+import oralsys.view.relatorios.RelatorioCidades;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -54,6 +55,11 @@ public class ListagemCidade extends javax.swing.JFrame {
         });
 
         btnImprimir.setText("Imprimir");
+        btnImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirActionPerformed(evt);
+            }
+        });
 
         btnNovo.setText("Novo");
         btnNovo.addActionListener(new java.awt.event.ActionListener() {
@@ -197,6 +203,10 @@ public class ListagemCidade extends javax.swing.JFrame {
         String condicao = "LOWER(nome) LIKE '%" + filtro + "%'";
         montarTabela(condicao);
     }//GEN-LAST:event_btnPesquisarActionPerformed
+
+    private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
+        new RelatorioCidades().setVisible(true);
+    }//GEN-LAST:event_btnImprimirActionPerformed
 
     /**
      * @param args the command line arguments

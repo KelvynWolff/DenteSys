@@ -12,6 +12,7 @@ import static oralsys.entidades.Consulta_.dentista;
 import static oralsys.entidades.FormaPagamento_.tipoPagamento;
 import oralsys.view.CidadeCadastro;
 import oralsys.view.ConsultaCadastro;
+import oralsys.view.relatorios.RelatorioConsultas;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -50,6 +51,11 @@ public class ListagemConsulta extends javax.swing.JFrame {
         });
 
         btnImprimir.setText("Imprimir");
+        btnImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirActionPerformed(evt);
+            }
+        });
 
         btnNovo.setText("Novo");
         btnNovo.addActionListener(new java.awt.event.ActionListener() {
@@ -222,6 +228,10 @@ public class ListagemConsulta extends javax.swing.JFrame {
             montarTabela(condicao, true);
         }
     }//GEN-LAST:event_btnPesquisarActionPerformed
+
+    private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
+        new RelatorioConsultas().setVisible(true);
+    }//GEN-LAST:event_btnImprimirActionPerformed
     public void montarTabela(String condicao, boolean join) {
         ConsultaController consultaController = new ConsultaController();
         JSONArray registros = consultaController.listarConsulta(condicao, join);

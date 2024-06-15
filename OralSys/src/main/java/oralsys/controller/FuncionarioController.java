@@ -70,30 +70,38 @@ public class FuncionarioController {
 }
 
     public Funcionario converte(JSONObject json) {
-        if (json == null) {
-            throw new IllegalArgumentException("O objeto JSON não pode ser nulo");
-        }
-
-        Funcionario funcionario = new Funcionario();
-        funcionario.setNome(json.optString("nome"));
-        funcionario.setCpf(json.optString("cpf"));
-        funcionario.setRegistro(json.optString("registro"));
-
-        if (json.has("login")) {
-            Object loginObj = json.get("login");
-            Login login = new Login();
-            if (loginObj instanceof JSONObject) {
-                JSONObject loginJSON = (JSONObject) loginObj;
-                login.setLogin(loginJSON.getString("login"));
-                login.setSenha(loginJSON.getString("senha"));
-            } else if (loginObj instanceof String) {
-                login.setLogin((String) loginObj);
-                
-                login.setSenha("defaultSenha");
-            }
-            funcionario.setLogin(login);
-        }
-
-        return funcionario;
+    if (json == null) {
+        throw new IllegalArgumentException("O objeto JSON não pode ser nulo");
     }
+
+    Funcionario funcionario = new Funcionario();
+    funcionario.setNome(json.optString("nome"));
+    funcionario.setCpf(json.optString("cpf"));
+    funcionario.setRegistro(json.optString("registro"));
+
+    Login login = new Login();
+    if (json.has("login")) {
+        Object loginObj = json.get("login");
+        if (loginObj instanceof JSONObject) {
+            JSONObject loginJSON = (JSONObject) loginObj;
+            login.setLogin(loginJSON.optString("login"));
+            if (loginJSON.has("senha")) {
+                String senha = loginJSON.getString("senha");
+                login.setSenha(senha.toCharArray());
+            } else {
+                throw new IllegalArgumentException("Senha obrigatória não fornecida");
+            }
+        } else if (loginObj instanceof String) {
+            login.setLogin((String) loginObj);
+            // A senha não pode ser determinada se "login" é apenas uma string
+            throw new IllegalArgumentException("Formato de login inválido, objeto JSON esperado");
+        }
+    } else {
+        throw new IllegalArgumentException("Campo 'login' é obrigatório");
+    }
+    funcionario.setLogin(login);
+
+    return funcionario;
+}
+
 }

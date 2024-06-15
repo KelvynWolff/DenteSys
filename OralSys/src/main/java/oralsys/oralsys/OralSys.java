@@ -1,10 +1,10 @@
 package oralsys.oralsys;
 
-import oralsys.view.Menu;
+import oralsys.view.LoginCadastro;
 
 public class OralSys {
 
     public static void main(String[] args) {
-        new Menu().setVisible(true);
+        new LoginCadastro().setVisible(true);
     }
 }

@@ -20,7 +20,7 @@ public class LoginDao extends Dao {
     }
     
     public Login buscarPorLogin(String login) {
-        String queryString = "SELECT * FROM Login WHERE login = " + login;
+        String queryString = "SELECT * FROM Login WHERE login = '" + login + "'";
        List<Login> logins = em.createNativeQuery(queryString, Login.class)
                  .getResultList();
        return logins.isEmpty() ? null : logins.get(0);

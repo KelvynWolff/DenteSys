@@ -17,4 +17,12 @@ public class Login implements Serializable {
 
     @Column(name = "login", length = 50, nullable = false, unique = true)
     private String login;
+    
+    public void setSenha(char[] senha) {
+        this.senha = new String(senha);
+    }
+
+    public char[] getSenha() {
+        return senha.toCharArray();
+    }
 }

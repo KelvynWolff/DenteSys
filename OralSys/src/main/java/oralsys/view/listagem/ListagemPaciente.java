@@ -9,6 +9,7 @@ import javax.swing.table.DefaultTableModel;
 import oralsys.controller.ContatoController;
 import oralsys.controller.PacienteController;
 import oralsys.view.PacienteCadastro;
+import oralsys.view.relatorios.RelatorioPacientes;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -47,6 +48,11 @@ public class ListagemPaciente extends javax.swing.JFrame {
         });
 
         btnImprimir.setText("Imprimir");
+        btnImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirActionPerformed(evt);
+            }
+        });
 
         btnNovo.setText("Novo");
         btnNovo.addActionListener(new java.awt.event.ActionListener() {
@@ -219,6 +225,10 @@ public class ListagemPaciente extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btnPesquisarActionPerformed
+
+    private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
+        new RelatorioPacientes().setVisible(true);
+    }//GEN-LAST:event_btnImprimirActionPerformed
     public void montarTabela(String condicao, boolean join) {
         PacienteController pacienteController = new PacienteController();
         JSONArray registros = pacienteController.listarPaciente(condicao, join);

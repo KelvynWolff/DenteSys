@@ -11,10 +11,12 @@ public class LoginController {
         this.loginDao = new LoginDao();
     }
 
-    public boolean autenticar(String login, String senha) {
+    public boolean autenticar(String login, char[] senha) {
         Login usuario = loginDao.buscarPorLogin(login);
-        if (usuario != null && Arrays.equals(usuario.getSenha().toCharArray(), senha.toCharArray())) {
-            return true;
+        if (usuario != null) {
+            if (Arrays.equals(usuario.getSenha(), senha)) {
+                return true;
+            }
         }
         return false;
     }

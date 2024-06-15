@@ -4,16 +4,19 @@
  */
 package oralsys.view;
 
+import javax.swing.JOptionPane;
+import oralsys.controller.LoginController;
+
 /**
  *
  * @author kelvy
  */
-public class Login extends javax.swing.JFrame {
+public class LoginCadastro extends javax.swing.JFrame {
 
     /**
      * Creates new form Login1
      */
-    public Login() {
+    public LoginCadastro() {
         initComponents();
     }
 
@@ -29,12 +32,13 @@ public class Login extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         lLogin = new javax.swing.JLabel();
         lSenha = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        jlogin = new javax.swing.JTextField();
+        jsenha = new javax.swing.JPasswordField();
         btnOk = new javax.swing.JButton();
         btnCaneclar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -44,7 +48,7 @@ public class Login extends javax.swing.JFrame {
         lSenha.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lSenha.setText("Senha");
 
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        jlogin.setHorizontalAlignment(javax.swing.JTextField.LEFT);
 
         btnOk.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btnOk.setText("OK");
@@ -75,8 +79,8 @@ public class Login extends javax.swing.JFrame {
                             .addComponent(lLogin))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)))
+                            .addComponent(jlogin)
+                            .addComponent(jsenha, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnOk)
                         .addGap(34, 34, 34)
@@ -90,16 +94,16 @@ public class Login extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lLogin)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jlogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jsenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lSenha))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnOk)
                     .addComponent(btnCaneclar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         jMenu1.setText("Cadastrar Usuario");
@@ -108,6 +112,15 @@ public class Login extends javax.swing.JFrame {
                 jMenu1MouseClicked(evt);
             }
         });
+
+        jMenuItem1.setText("Cadastrar Usuario");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
         jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
@@ -127,7 +140,7 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
-        // TODO add your handling code here:
+        validar();
     }//GEN-LAST:event_btnOkActionPerformed
 
     private void btnCaneclarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCaneclarActionPerformed
@@ -137,6 +150,10 @@ public class Login extends javax.swing.JFrame {
     private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenu1MouseClicked
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        new FuncionarioCadastro().setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -155,23 +172,39 @@ public class Login extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+                new LoginCadastro().setVisible(true);
             }
         });
+    }
+    
+    public void validar() {
+        String login = jlogin.getText();
+        char[] senha = jsenha.getPassword();
+        
+        LoginController loginController = new LoginController();
+        boolean autenticado = loginController.autenticar(login, senha);
+        if (!autenticado) {
+            JOptionPane.showMessageDialog(this, "Senha Invalida!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        new Menu().setVisible(true);
+        this.setVisible(false);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -179,9 +212,10 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton btnOk;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jlogin;
+    private javax.swing.JPasswordField jsenha;
     private javax.swing.JLabel lLogin;
     private javax.swing.JLabel lSenha;
     // End of variables declaration//GEN-END:variables

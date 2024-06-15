@@ -6,6 +6,8 @@ package oralsys.view;
 
 import oralsys.view.listagem.ListagemCidade;
 import oralsys.view.listagem.ListagemConsulta;
+import oralsys.view.listagem.ListagemFuncionario;
+import oralsys.view.listagem.ListagemMaterial;
 import oralsys.view.listagem.ListagemPaciente;
 import oralsys.view.relatorios.RelatorioCidades;
 import oralsys.view.relatorios.RelatorioConsultas;
@@ -51,6 +53,7 @@ public class Menu extends javax.swing.JFrame {
         cidade = new javax.swing.JMenuItem();
         material = new javax.swing.JMenuItem();
         logoff = new javax.swing.JMenu();
+        jlogoff = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -82,6 +85,11 @@ public class Menu extends javax.swing.JFrame {
         cadastro.add(btnConsulta);
 
         btnMaterial.setText("Material");
+        btnMaterial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMaterialActionPerformed(evt);
+            }
+        });
         cadastro.add(btnMaterial);
 
         btnPaciente.setText("Paciente");
@@ -93,6 +101,11 @@ public class Menu extends javax.swing.JFrame {
         cadastro.add(btnPaciente);
 
         btnFuncionario.setText(" Funcionario");
+        btnFuncionario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFuncionarioActionPerformed(evt);
+            }
+        });
         cadastro.add(btnFuncionario);
 
         jMenuBar1.add(cadastro);
@@ -142,6 +155,15 @@ public class Menu extends javax.swing.JFrame {
         jMenuBar1.add(relatorio);
 
         logoff.setText("Logoff");
+
+        jlogoff.setText("Logoff");
+        jlogoff.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jlogoffActionPerformed(evt);
+            }
+        });
+        logoff.add(jlogoff);
+
         jMenuBar1.add(logoff);
 
         setJMenuBar(jMenuBar1);
@@ -204,6 +226,19 @@ public class Menu extends javax.swing.JFrame {
         new RelatorioMateriais().setVisible(true);
     }//GEN-LAST:event_materialActionPerformed
 
+    private void btnMaterialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMaterialActionPerformed
+        new ListagemMaterial().setVisible(true);
+    }//GEN-LAST:event_btnMaterialActionPerformed
+
+    private void btnFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFuncionarioActionPerformed
+        new ListagemFuncionario().setVisible(true);
+    }//GEN-LAST:event_btnFuncionarioActionPerformed
+
+    private void jlogoffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jlogoffActionPerformed
+        new LoginCadastro().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jlogoffActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -228,6 +263,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JMenuItem jlogoff;
     private javax.swing.JMenu logoff;
     private javax.swing.JMenuItem material;
     private javax.swing.JMenuItem paciente;
