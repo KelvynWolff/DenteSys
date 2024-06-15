@@ -5,15 +5,20 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import javax.swing.JOptionPane;
+import oralsys.entidades.Cidade;
 import oralsys.entidades.Consulta;
 import oralsys.entidades.Contato;
 import oralsys.entidades.Endereco;
+import static oralsys.entidades.Endereco_.cidade;
 import oralsys.entidades.Paciente;
 import oralsys.entidades.Prontuario;
+import oralsys.persistencia.CidadeDao;
 import oralsys.persistencia.ContatoDao;
 import oralsys.persistencia.PacienteDao;
 import oralsys.persistencia.ConverterEntidades;
 import oralsys.persistencia.EnderecoDao;
+import oralsys.view.CidadeCadastro;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -47,11 +52,38 @@ public class PacienteController implements Controller {
      String enderecoString = pacienteJSON.optString("endereco");
      EnderecoController enderecoController = new EnderecoController();
      JSONArray registros = enderecoController.listarEndereco("rua like '%" + enderecoString + "%'");
-     int enderecoId = registros.getJSONObject(0).getInt("id");
-     EnderecoDao enderecoDao = new EnderecoDao();
-     Endereco endereco = enderecoDao.buscarPorId((long) enderecoId);
      
-    
+     Endereco endereco = null;
+     Cidade cidade = null;
+     if (registros.length() > 0) {
+        int enderecoId = registros.getJSONObject(0).getInt("id");
+        EnderecoDao enderecoDao = new EnderecoDao();
+        endereco = enderecoDao.buscarPorId((long) enderecoId);
+     } else {
+        CidadeController cidadeController = new CidadeController();
+        String condicao_cidade = "nome='" + pacienteJSON.optString("cidade") + "'";
+        JSONArray registros_cidade = cidadeController.listarCidade(condicao_cidade);
+        if (registros_cidade.length() > 0) {
+            int cidadeId = registros_cidade.getJSONObject(0).getInt("id");
+            CidadeDao cidadeDao = new CidadeDao();
+            cidade = cidadeDao.buscarPorId((long) cidadeId);
+        } else {
+            JOptionPane.showMessageDialog(null, "Cidade nao cadastrada! Convem cadastrar a cidade primeiro.");
+            CidadeCadastro cidadeCadastro = new CidadeCadastro();
+            cidadeCadastro.setTabelaMontar(false);
+            cidadeCadastro.setVisible(true);
+            return "";
+        }
+        JSONObject cadastroEnd = new JSONObject();
+        cadastroEnd.put("cidadeId", cidade.getId());
+        cadastroEnd.put("rua", pacienteJSON.optString("endereco"));
+        enderecoController.cadastrarEndereco(cadastroEnd);
+        JSONArray registros2 = enderecoController.listarEndereco("rua like '%" + enderecoString + "%'");
+        int enderecoId = registros2.getJSONObject(0).getInt("id");
+        EnderecoDao enderecoDao = new EnderecoDao();
+        endereco = enderecoDao.buscarPorId((long) enderecoId);
+     }
+     
      String numeroCasa = pacienteJSON.optString("numeroCasa");
      if (numeroCasa.isEmpty()) {
          status.add("Número da Casa inválido!");

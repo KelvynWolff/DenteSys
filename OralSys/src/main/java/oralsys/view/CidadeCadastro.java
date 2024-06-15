@@ -11,6 +11,7 @@ public class CidadeCadastro extends javax.swing.JFrame {
     ListagemCidade listagemCidade;
     String modo = "cadastro";
     int id = 0;
+    boolean tabelaMontar = true;
    
     public CidadeCadastro() {
         initComponents();
@@ -24,6 +25,10 @@ public class CidadeCadastro extends javax.swing.JFrame {
     
     public void setCidade(String cidade) {
         tCidade.setText(cidade);
+    }
+    
+    public void setTabelaMontar(boolean status) {
+        this.tabelaMontar = status;
     }
     
     public void setEstado(String estado) {
@@ -158,7 +163,9 @@ public class CidadeCadastro extends javax.swing.JFrame {
         }
         if (retorno.equals("Sucesso!")) {
             JOptionPane.showMessageDialog(rootPane, mensagem, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-            listagemCidade.montarTabela("");
+            if (this.tabelaMontar) {
+                listagemCidade.montarTabela("");   
+            }
             dispose();
         } else {
             JOptionPane.showMessageDialog(rootPane, retorno, "Erro", JOptionPane.ERROR_MESSAGE);

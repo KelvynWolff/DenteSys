@@ -50,9 +50,6 @@ public class EnderecoController implements Controller {
         if (!enderecoJSON.has("cidadeId") || enderecoJSON.optString("cidadeId").isEmpty()) {
             status.add("Cidade inválida!");
         }
-        if (!enderecoJSON.has("pacientesIds") || enderecoJSON.optString("pacientesIds").isEmpty()) {
-            status.add("Pacientes inválidos!");
-        }
         if (enderecoJSON.optString("rua").isEmpty()) {
             status.add("Rua inválida!");
         }
