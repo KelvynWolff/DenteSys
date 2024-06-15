@@ -25,8 +25,11 @@ public class Dao {
         em.merge(o);
         etx.commit();
     }
-     public void remove(Object o){
+    public void remove(Object o) {
         etx.begin();
+        if (!em.contains(o)) {
+            o = em.merge(o);
+        }
         em.remove(o);
         etx.commit();
     }
