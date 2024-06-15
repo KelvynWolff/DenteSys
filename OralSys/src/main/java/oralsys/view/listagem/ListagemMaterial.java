@@ -18,9 +18,9 @@ public class ListagemMaterial extends javax.swing.JFrame {
      * Creates new form ListagemMaterial
      */
     public ListagemMaterial() {
-        setLocationRelativeTo(null);
         initComponents();
         montarTabela("");
+        setLocationRelativeTo(null);
     }
 
     /**

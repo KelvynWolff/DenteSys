@@ -27,8 +27,8 @@ public class PacienteCadastro extends javax.swing.JFrame {
     private ListagemPaciente listagemPaciente;
 
     public PacienteCadastro() {
-        setLocationRelativeTo(null);
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     public PacienteCadastro(ListagemPaciente listagemPaciente) {

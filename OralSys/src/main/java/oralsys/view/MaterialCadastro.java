@@ -28,8 +28,8 @@ public class MaterialCadastro extends javax.swing.JFrame {
      * Creates new form MaterialCadastrar
      */
     public MaterialCadastro() {
-        setLocationRelativeTo(null);
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     public void setMaterial(String material) {

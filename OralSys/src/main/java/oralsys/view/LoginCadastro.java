@@ -17,8 +17,8 @@ public class LoginCadastro extends javax.swing.JFrame {
      * Creates new form Login1
      */
     public LoginCadastro() {
-        setLocationRelativeTo(null);
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

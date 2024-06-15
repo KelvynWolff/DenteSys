@@ -18,9 +18,9 @@ public class ListagemFuncionario extends javax.swing.JFrame {
      * Creates new form ListagemFuncionario
      */
     public ListagemFuncionario() {
-        setLocationRelativeTo(null);
         initComponents();
         montarTabela("");
+        setLocationRelativeTo(null);
     }
 
     /**

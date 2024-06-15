@@ -16,9 +16,9 @@ import org.json.JSONObject;
 public class ListagemPaciente extends javax.swing.JFrame {
 
     public ListagemPaciente() {
-        setLocationRelativeTo(null);
         initComponents();
         montarTabela("", false);
+        setLocationRelativeTo(null);
     }
 
     /**

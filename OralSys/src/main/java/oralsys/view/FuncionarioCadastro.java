@@ -16,8 +16,8 @@ public class FuncionarioCadastro extends javax.swing.JFrame {
     int id = 0;
 
     public FuncionarioCadastro() {
-        setLocationRelativeTo(null);
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     public FuncionarioCadastro(ListagemFuncionario listagemFuncionario) {

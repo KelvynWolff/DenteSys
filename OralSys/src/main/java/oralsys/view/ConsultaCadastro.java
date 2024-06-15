@@ -16,9 +16,9 @@ public class ConsultaCadastro extends javax.swing.JFrame {
     String modo = "";
 
     public ConsultaCadastro() {
-        setLocationRelativeTo(null);
         initComponents();
         inicio(0, 0);
+        setLocationRelativeTo(null);
     }
     
     public ConsultaCadastro(ListagemConsulta listagemConsulta) {
@@ -91,6 +91,7 @@ public class ConsultaCadastro extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         sDentista = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -186,6 +187,10 @@ public class ConsultaCadastro extends javax.swing.JFrame {
             }
         });
         jPanel1.add(sDentista, new org.netbeans.lib.awtextra.AbsoluteConstraints(272, 129, 300, -1));
+
+        jLabel1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel1.setText("Cadastro de Consulta");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -356,6 +361,7 @@ public class ConsultaCadastro extends javax.swing.JFrame {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;

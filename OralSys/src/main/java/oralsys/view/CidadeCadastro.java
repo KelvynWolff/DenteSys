@@ -26,8 +26,8 @@ public class CidadeCadastro extends javax.swing.JFrame {
      * Creates new for mCadastroCidade
      */
     public CidadeCadastro() {
-        setLocationRelativeTo(null);
         initComponents();
+        setLocationRelativeTo(null);
     }
     
     public CidadeCadastro(ListagemCidade listagemCidade) {

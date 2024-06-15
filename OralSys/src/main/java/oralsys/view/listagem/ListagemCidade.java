@@ -23,9 +23,9 @@ public class ListagemCidade extends javax.swing.JFrame {
      * Creates new form ListagemCidade
      */
     public ListagemCidade() {
-        setLocationRelativeTo(null);
         initComponents();
         montarTabela("");
+        setLocationRelativeTo(null);
     }
 
     /**
